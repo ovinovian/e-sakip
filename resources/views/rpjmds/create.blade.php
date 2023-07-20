@@ -2,7 +2,7 @@
 
 @section('content')
 		
-<div class="content-body">
+        <div class="content-body">
             <div class="container-fluid">
 				<div class="row page-titles">
 					<ol class="breadcrumb">
