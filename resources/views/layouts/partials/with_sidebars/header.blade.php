@@ -13,8 +13,8 @@
                                 <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
                                     <img src="{{ asset('assets/images/user.jpg') }}" width="20" alt=""/>
 									<div class="header-info ms-3">
-										<span class="fs-18 font-w500 mb-2">Franklin Jr.</span>
-										<small class="fs-12 font-w400">demo@gmail.com</small>
+										<span class="fs-18 font-w500 mb-2">Pemkab Bangka</span>
+										<small class="fs-12 font-w400">bangkakab@bangka.go.id</small>
 									</div>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end">
