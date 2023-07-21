@@ -54,7 +54,7 @@ class Rpjmd2VisiController extends Controller
     public function visi($id)
     {
         $rpjmds = Rpjmd1_rpjmd::where('id',$id)->get();
-        $i = 0;
+        $i = 1;
         $rpjmd_visis = Rpjmd2_visi::where('id_rpjmd',$id)->get();
 
         return view('rpjmd_visis.index', compact('rpjmds','rpjmd_visis','i'));
@@ -91,14 +91,22 @@ class Rpjmd2VisiController extends Controller
     public function store(Request $request)
     {
         $validasi = request()->validate([
-            'visi' => 'required',
+            'nama_visi_rpjmd' => 'required',
+            'id_rpjmd' => 'required',
         ]);
 
         // dd($request);
-
+        
         Rpjmd2_visi::create($validasi);
-        return redirect()->route('rpjmds.index')
-                        ->with('success','Rpjmd berhasil ditambahkan.');
+        
+        $id = $request->id_rpjmd;
+
+        // $rpjmds = Rpjmd1_rpjmd::where('id',$id)->get();
+        // $i = 0;
+        // $rpjmd_visis = Rpjmd2_visi::where('id_rpjmd',$id)->get();
+
+        return redirect()->route('rpjmd_i_visis', ['id' => $id])
+                        ->with('success','Visi berhasil ditambahkan.');
     }
 
     /**
@@ -121,9 +129,13 @@ class Rpjmd2VisiController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    public function edit(Rpjmd1_rpjmd $rpjmd)
+    public function edit(Rpjmd2_visi $rpjmd_visi)
     {
-        return view('rpjmds.edit',compact('rpjmd'));
+        $rpjmd_visis = Rpjmd2_visi::where('id', $rpjmd_visi->id)->get();
+        
+        $rpjmd = Rpjmd1_rpjmd::where('id', $rpjmd_visis[0]['id_rpjmd'])->get();
+        
+        return view('rpjmd_visis.edit',compact('rpjmd_visis','rpjmd'));
     }
 
     /**
@@ -134,16 +146,18 @@ class Rpjmd2VisiController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function update(Request $request, Rpjmd1_rpjmd $rpjmd)
+    public function update(Request $request, Rpjmd2_visi $rpjmd_visi)
     {
         $validasi = request()->validate([
-            'tahun_awal' => 'required',
-            'tahun_akhir' => 'required',
+            'nama_visi_rpjmd' => 'required',
         ]);
+        
+        $rpjmd = Rpjmd1_rpjmd::where('id',$rpjmd_visi->id);
 
-        $rpjmd->update($validasi);
-        return redirect()->route('rpjmds.index')
-                        ->with('success','Rpjmd berhasil dirubah');
+        $rpjmd_visi->update($validasi);
+
+        return redirect()->route('rpjmd_i_visis',['id'=> $rpjmd])
+                        ->with('success','Visi RPJMD berhasil dirubah');
     }
 
     /**
@@ -153,19 +167,13 @@ class Rpjmd2VisiController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function destroy(Rpjmd1_rpjmd $rpjmd)
+    public function destroy(Rpjmd2_visi $rpjmd_visi)
     {
-        $rpjmd->delete();
+        $rpjmd = Rpjmd1_rpjmd::where('id',$rpjmd_visi->id);
 
-        return redirect()->route('rpjmds.index')
-                        ->with('success','Rpjmd berhasil dihapus');
-    }
+        $rpjmd_visi->delete();
 
-    public function publishrpjmd($id)
-    {
-        Rpjmd1_rpjmd::where('id', $id)->update(['publish' => 1]);
-    
-        return redirect()->route('rpjmds.index')
-                        ->with('success','rpjmd berhasil dipublish');
+        return redirect()->route('rpjmd_i_visis',['id'=> $rpjmd])
+                        ->with('success','Visi RPJMD berhasil dihapus');
     }
 }

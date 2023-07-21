@@ -142,11 +142,11 @@ class Rpjmd1RpjmdController extends Controller
                         ->with('success','Rpjmd berhasil dihapus');
     }
 
-    public function publishrpjmd($id)
-    {
-        Rpjmd1_rpjmd::where('id', $id)->update(['publish' => 1]);
+    // public function publishrpjmd($id)
+    // {
+    //     Rpjmd1_rpjmd::where('id', $id)->update(['publish' => 1]);
     
-        return redirect()->route('rpjmds.index')
-                        ->with('success','rpjmd berhasil dipublish');
-    }
+    //     return redirect()->route('rpjmds.index')
+    //                     ->with('success','rpjmd berhasil dipublish');
+    // }
 }

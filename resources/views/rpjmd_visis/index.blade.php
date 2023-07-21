@@ -31,6 +31,7 @@
                                     <table id="example3" class="display" style="min-width: 845px">
                                         <thead>
                                             <tr>
+                                                <th>No</th>
                                                 <th>Visi RPJMD</th>
                                                 <th>Action</th>
                                             </tr>
@@ -38,7 +39,8 @@
                                         <tbody>
                                             @foreach ($rpjmd_visis as $key => $rpjmd_visi)
                                             <tr>
-                                                <td><a href="{{ route('rpjmd_visis.index',$rpjmd->id) }}">RPJMD {{ $rpjmd_visi->nama_visi_rpjmd }}</a></td>
+                                                <td>{{ $i++ }}</td>
+                                                <td><a href="{{ route('rpjmd_visis.index',$rpjmds[0]['id']) }}">{{ $rpjmd_visi->nama_visi_rpjmd }}</a></td>
                                                 @if($rpjmd_visi->status_visi_rpjmd == 0)
                                                 <td>
 													<div class="d-flex">
