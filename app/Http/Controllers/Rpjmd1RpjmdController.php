@@ -7,8 +7,9 @@ use App\Models\Rpjmd1_rpjmd;
 
 use Illuminate\Http\Request;
 
-class RpjmdController extends Controller
+class Rpjmd1RpjmdController extends Controller
 {
+    //
     // private $type;
 
     //

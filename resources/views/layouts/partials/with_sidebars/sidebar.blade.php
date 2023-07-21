@@ -21,8 +21,8 @@
 							<span class="nav-text">RPJMD</span>
 						</a>
                         <ul aria-expanded="false">
-							<li><a href="index.html">RPJMD</a></li>
-							<li><a href="index-2.html">Dashboard Dark</a></li>
+							<li><a href="{{ route('rpjmds.index') }}">RPJMD</a></li>
+							<li><a href="{{ route('rpjmd_tujuans.index') }}">Tujuan RPJMD</a></li>
 						</ul>
                     </li>                 
                 </ul>

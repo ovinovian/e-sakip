@@ -8,7 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\RpjmdController;
+use App\Http\Controllers\Rpjmd1RpjmdController;
 use App\Http\Controllers\SubKegiatanController;
 use App\Http\Controllers\UrusanController;
 use App\Http\Controllers\UserController;
@@ -32,7 +32,15 @@ Route::get('/home2', function () {
     return view('home2');
 });
 
-Route::resource('rpjmds', RpjmdController::class);
+Route::resource('rpjmds', Rpjmd1RpjmdController::class);
+Route::resource('rpjmd_visis', Rpjmd2VisiController::class);
+Route::resource('rpjmd_misis', Rpjmd3MisiController::class);
+Route::resource('rpjmd_tujuans', Rpjmd4TujuanController::class);
+Route::resource('rpjmd_sasarans', Rpjmd5SasaranController::class);
+Route::resource('rpjmd_strategis', Rpjmd6StrategiController::class);
+Route::resource('rpjmd_kebijakans', Rpjmd7KebijakanController::class);
+Route::resource('rpjmd_programs', Rpjmd8ProgramController::class);
+Route::resource('rpjmd_kegiatans', Rpjmd9KegiatanController::class);
 
 // Auth::routes();
 
