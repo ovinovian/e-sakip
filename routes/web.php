@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\RpjmdController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -24,9 +25,9 @@ Route::get('/', function () {
 Route::get('/home2', function () {
     return view('home2');
 });
-Route::get('/rpjmdindex', function () {
-    return view('rpjmds.index');
-});
+
+Route::resource('rpjmds', RpjmdController::class);
+
 // Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');

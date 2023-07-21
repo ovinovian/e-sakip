@@ -24,13 +24,14 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <a class="btn light btn-primary" href="{{ route('rpjmds.create') }}">Tambah RPJMD</a>
+                                <button class="btn light btn-primary">Tambah RPJMD</button>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table id="example3" class="display" style="min-width: 845px">
                                         <thead>
                                             <tr>
+                                                <th></th>
                                                 <th>RPJMD</th>
                                                 <th>Tahun Mulai</th>
                                                 <th>Tahun Selesai</th>
@@ -39,29 +40,20 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($rpjmds as $key => $rpjmd)
                                             <tr>
-                                                <td>RPJMD {{ $rpjmd->tahun_awal }} - {{ $rpjmd->tahun_akhir }}</td>
-                                                <td>{{ $rpjmd->tahun_awal }}</td>
-                                                <td>{{ $rpjmd->tahun_akhir }}</td>
-                                                <td>{{ $rpjmd->status_rpjmd }}</td>
-                                                @if($rpjmd->status_rpjmd == 0)
+                                                <td><img class="rounded-circle" width="35" src="{{ asset('assets/images/profile/small/pic1.jpg') }}" alt=""></td>
+                                                <td>Tiger Nixon</td>
+                                                <td><a href="javascript:void(0);"><strong>info@example.com</strong></a></td>
+                                                <td>2011/04/25</td>
+                                                <td>2011/04/25</td>
                                                 <td>
 													<div class="d-flex">
-														<a href="{{ route('rpjmds.edit',$rpjmd->id) }}" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
-                                                        <form action="{{ route('rpjmds.destroy',$rpjmd->id) }}" method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-														<button type="submit" class="btn btn-danger shadow btn-xs sharp" onclick="return confirm('Apakah yakin ingin menghapus rpjmd?');"><i class="fa fa-trash"></i></a>
-                                                        </form>
+														<a href="#" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+														<a href="#" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
 													</div>												
 												</td>
-                                                @else
-                                                <td></td>
-                                                @endif
-                                                <td></td>
+                                               										
                                             </tr>
-                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -84,7 +76,3 @@
 <script src="{{ asset('assets/js/plugins-init/datatables.init.js') }}"></script>
 
 @endsection
-
-@push('after-scripts')
-  
-@endpush
