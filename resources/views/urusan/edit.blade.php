@@ -6,7 +6,7 @@
         <div class="row page-titles">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active"><a href="{{ route('urusan.index') }}">Urusan</a></li>
-                <li class="breadcrumb-item"><a href="javascript:void(0)">Tambah</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Rubah</a></li>
             </ol>
         </div>
         <div class="container">
@@ -14,7 +14,7 @@
                 <div class="col-xl-12">
                     <div class="card">
                         <div class="card-header border-0 pb-0">
-                            <h5 class="card-title">Tambah Urusan</h5>
+                            <h5 class="card-title">Rubah Urusan</h5>
                         </div>
 
                         <div class="card-body">

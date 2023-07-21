@@ -17,7 +17,7 @@
 						</ul>
                     </li>
 					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
-							<i class="fas fa-home"></i>
+						<i class="fas fa-info-circle"></i>
 							<span class="nav-text">RPJMD</span>
 						</a>
                         <ul aria-expanded="false">
