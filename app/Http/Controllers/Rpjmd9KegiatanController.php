@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Rpjmd1_rpjmd;
 use Illuminate\Http\Request;
 
-class Rpjmd8KegiatanController extends Controller
+class Rpjmd9KegiatanController extends Controller
 {
     //
     // private $type;

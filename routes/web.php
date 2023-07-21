@@ -20,6 +20,7 @@ use App\Http\Controllers\Rpjmd9KegiatanController;
 use App\Http\Controllers\SubKegiatanController;
 use App\Http\Controllers\UrusanController;
 use App\Http\Controllers\UserController;
+use App\Models\Rpjmd2_visi;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,8 @@ Route::get('/home2', function () {
 });
 
 Route::resource('rpjmds', Rpjmd1RpjmdController::class);
+Route::get('rpjmd_i_visis/{id}', [Rpjmd2VisiController::class, 'visi'])->name('rpjmd_i_visis');
+Route::get('rpjmd_c_visis/{id}', [Rpjmd2VisiController::class, 'add'])->name('rpjmd_c_visis');
 Route::resource('rpjmd_visis', Rpjmd2VisiController::class);
 Route::resource('rpjmd_misis', Rpjmd3MisiController::class);
 Route::resource('rpjmd_tujuans', Rpjmd4TujuanController::class);

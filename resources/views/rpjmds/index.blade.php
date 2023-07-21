@@ -41,7 +41,7 @@
                                         <tbody>
                                             @foreach ($rpjmds as $key => $rpjmd)
                                             <tr>
-                                                <td>RPJMD {{ $rpjmd->tahun_awal }} - {{ $rpjmd->tahun_akhir }}</td>
+                                                <td><a href="{{route('rpjmd_i_visis', ['id' => $rpjmd->id])}}">RPJMD {{ $rpjmd->tahun_awal }} - {{ $rpjmd->tahun_akhir }}</a></td>
                                                 <td>{{ $rpjmd->tahun_awal }}</td>
                                                 <td>{{ $rpjmd->tahun_akhir }}</td>
                                                 <td>{{ $rpjmd->status_rpjmd }}</td>

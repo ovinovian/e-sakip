@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rpjmd1_rpjmd;
+use App\Models\Rpjmd2_visi;
 use Illuminate\Http\Request;
 
 class Rpjmd2VisiController extends Controller
@@ -29,7 +30,7 @@ class Rpjmd2VisiController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    public function index(Request $request)
+    public function index($id)
     {
         // if ($request->ajax()) {
         //     return datatables(DataDb::query())
@@ -39,12 +40,24 @@ class Rpjmd2VisiController extends Controller
         // return view($this->type . '.index', [
         //     'type' => $this->type,
         // ]);
+        // dd($id);
 
-        $rpjmds = Rpjmd1_rpjmd::all();
+        // $rpjmds = Rpjmd1_rpjmd::all();
+        // $rpjmd_visis = Rpjmd2_visi::where('id_rpjmd',$request)->get();
 
-        $i = 0;
+
+        // $i = 0;
         
-        return view('rpjmds.index',compact('rpjmds','i'));
+        // return view('rpjmd_visis.index',compact('rpjmds','rpjmd_visis','i'));
+    }
+
+    public function visi($id)
+    {
+        $rpjmds = Rpjmd1_rpjmd::where('id',$id)->get();
+        $i = 0;
+        $rpjmd_visis = Rpjmd2_visi::where('id_rpjmd',$id)->get();
+
+        return view('rpjmd_visis.index', compact('rpjmds','rpjmd_visis','i'));
     }
 
 
@@ -56,7 +69,7 @@ class Rpjmd2VisiController extends Controller
 
     public function create()
     {
-        return view('rpjmds.create');
+        return view('rpjmd_visis.create');
     }
 
     /**
@@ -65,17 +78,25 @@ class Rpjmd2VisiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function add($id)
+    {
+        $rpjmds = Rpjmd1_rpjmd::where('id', $id)->get();
+
+        $i = 0;
+        
+        return view('rpjmd_visis.create',compact('rpjmds'));
+    }
     
     public function store(Request $request)
     {
         $validasi = request()->validate([
-            'tahun_awal' => 'required',
-            'tahun_akhir' => 'required',
+            'visi' => 'required',
         ]);
 
         // dd($request);
 
-        Rpjmd1_rpjmd::create($validasi);
+        Rpjmd2_visi::create($validasi);
         return redirect()->route('rpjmds.index')
                         ->with('success','Rpjmd berhasil ditambahkan.');
     }
