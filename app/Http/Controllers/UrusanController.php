@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -22,10 +23,8 @@ class UrusanController extends Controller
      */
     public function create()
     {
-        // $collection = DB::table("main1_urusans")->get();
         return view('urusan.create', [
-            'title' => 'Add Urusan',
-            // 'urusans' => $collection,
+            'title' => 'Tambah Urusan',
         ]);
     }
 
@@ -39,10 +38,20 @@ class UrusanController extends Controller
             'kode_urusan' => 'required',
         ]);
 
-        DB::table("main1_urusans")->insert([
+        $created = Carbon::now();
+
+        $save = DB::table("main1_urusans")->insert([
             "nama_urusan" => $request->nama_urusan,
-            "kode_urusan" => $request->kode_urusan
+            "kode_urusan" => $request->kode_urusan,
+            "created_at" => $created,
+            "updated_at" => $created
         ]);
+
+        if ($save) {
+            return redirect()->route('urusan.index')->with('success', 'Data urusan berhasil disimpan');
+        } else {
+            return redirect()->route('urusan.index')->with('error', 'Data gagal disimpan');
+        }
     }
 
     /**
@@ -58,12 +67,12 @@ class UrusanController extends Controller
      */
     public function edit(string $id)
     {
-        // $collection = DB::table("main1_urusans")->where('id', '=', $id)->get();
-
-
+        $collection = DB::table("main1_urusans")->where('id', '=', $id)->first();
+        
         return view('urusan.edit', [
             'title' => 'Add Urusan',
-            // 'urusans' => $collection,
+            'urusans' => $collection,
+            'id' => $id
         ]);
     }
 
@@ -73,14 +82,23 @@ class UrusanController extends Controller
     public function update(Request $request, string $id)
     {
         $this->validate($request, [
-            'nama_urusan' => 'String',
-            'kode_urusan' => 'String',
+            'nama_urusan' => 'required',
+            'kode_urusan' => 'required',
         ]);
 
-        DB::table("main1_urusans")->where('id', '=', $id)->update([
+        $created = Carbon::now();
+
+        $update = DB::table("main1_urusans")->where('id', '=', $id)->update([
             "nama_urusan" => $request->nama_urusan,
-            "kode_urusan" => $request->kode_urusan
+            "kode_urusan" => $request->kode_urusan,
+            "updated_at" => $created
         ]);
+
+        if ($update) {
+            return redirect()->route('urusan.index')->with('success', 'Data urusan berhasil disimpan');
+        } else {
+            return redirect()->route('urusan.index')->with('error', 'Data gagal disimpan');
+        }
     }
 
     /**
@@ -88,6 +106,11 @@ class UrusanController extends Controller
      */
     public function destroy(string $id)
     {
-        DB::table("main1_urusans")->where('id', '=', $id)->delete();
+        $delete = DB::table("main1_urusans")->where('id', '=', $id)->delete();
+        if ($delete) {
+            return redirect()->route('urusan.index')->with('success_delete', 'Data berhasil dihapus');
+        } else {
+            return redirect()->route('urusan.index')->with('error', 'Data gagal dihapus');
+        }
     }
 }

@@ -1,7 +1,7 @@
 
         <div class="nav-header">
-            <a href="index.html" class="brand-logo">
-				<svg class="logo-abbr" width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <a href="{{url('/')}}" class="brand-logo">
+				<!-- <svg class="logo-abbr" width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<rect class="react-logo" width="60" height="60" rx="30" fill="#00A15D"/>
 					<mask id="mask0" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="60" height="60">
 					<rect class="react-logo" width="60" height="60" rx="30" fill="#00A15D"/>
@@ -20,7 +20,8 @@
 					<stop offset="1" stop-color="#FF8C4B"/>
 					</linearGradient>
 					</defs>
-				</svg>
+				</svg> -->
+				<img src="{{ asset('assets/images/logo.png') }}" alt="logo" height="60">
 
 				<div class="brand-title">
 					<h2 class="">e-SAKIP</h2>

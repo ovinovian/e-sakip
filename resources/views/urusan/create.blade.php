@@ -19,17 +19,17 @@
 
                         <div class="card-body">
                             <!-- action form yang mengarah ke route store untuk proses simpan data  -->
-                            <form action="#" method="post">
+                            <form action="{{ route('urusan.store') }}" method="post">
                                 @csrf
                                 <div class="mb-3 input-success">
-                                    <label for="" class="mb-1">Nama Urusan</label>
+                                    <label for="" class="mb-1">Nama Urusan<span class="text-danger">*</span></label>
                                     <input type="text" name="nama_urusan" class="form-control @error('nama_urusan') is-invalid @enderror">
                                     @error('nama_urusan')
                                     <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="mb-3 input-success">
-                                    <label for="" class="mb-1">Kode Urusan</label>
+                                    <label for="" class="mb-1">Kode Urusan<span class="text-danger">*</span></label>
                                     <input type="text" name="kode_urusan" class="form-control @error('kode_urusan') is-invalid @enderror">
                                     @error('kode_urusan')
                                     <span class="invalid-feedback">{{ $message }}</span>
@@ -47,4 +47,18 @@
     </div>
 </div>
 
+@endsection
+
+@section('script')
+<script>
+    @if($message = Session::get('error'))
+    Swal.fire({
+        position: 'center',
+        icon: 'warning',
+        title: 'Perhatian',
+        html: '{{ $message }}',
+        timer: 3200
+    })
+    @endif
+</script>
 @endsection
