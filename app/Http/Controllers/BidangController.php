@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -22,12 +23,10 @@ class BidangController extends Controller
      */
     public function create()
     {
-        // $collection = DB::table("main2_bidangs")->get();
-        // $urusans = DB::table("main1_urusans")->get();
+        $urusans = DB::table("main1_urusans")->get();
         return view('bidang.create', [
-            'title' => 'Add Bidang',
-            // 'bidangs' => $collection,
-            // 'urusans' => $urusans,
+            'title' => 'Tambah Bidang',
+            'urusans' => $urusans,
         ]);
     }
 
@@ -40,13 +39,29 @@ class BidangController extends Controller
             'nama_bidang' => 'required',
             'kode_bidang' => 'required',
             'id_urusan' => 'required',
-        ]);
+        ],
+        [
+            'id_urusan.required' => 'The urusan required'
+        ]
+        );
 
-        DB::table("main2_bidangs")->insert([
+        $created = Carbon::now();
+
+        $save =  DB::table("main2_bidangs")->insert([
             "nama_bidang" => $request->nama_bidang,
             "kode_bidang" => $request->kode_bidang,
-            "id_urusan" => $request->id_urusan
+            "id_urusan" => $request->id_urusan,
+            "created_at" => $created,
+            "updated_at" => $created
         ]);
+
+        if ($save) {
+            return redirect()->route('bidang.index')->with('success', 'Data Bidang berhasil disimpan');
+        } else {
+            return redirect()->route('bidang.index')->with('error', 'Data gagal disimpan');
+        }
+
+
     }
 
     /**
@@ -62,14 +77,21 @@ class BidangController extends Controller
      */
     public function edit(string $id)
     {
-        // $collection = DB::table("main2_bidangs")->where('id', '=', $id)->get();
-        // $urusans = DB::table("main1_urusans")->get();
+        $collection = DB::table("main2_bidangs") ->where('id', '=', $id)->first();
+        $urusans = DB::table("main1_urusans")->get();
+
+        $current_urusan = DB::table("main1_urusans")
+                ->where('id', '=', $collection->id_urusan)
+                ->select('main1_urusans.id', 'main1_urusans.nama_urusan')
+                ->first();
 
 
         return view('bidang.edit', [
-            'title' => 'Add Urusan',
-            // 'bidangs' => $collection,
-            // 'urusans' => $urusans,
+            'title' => 'Edit Urusan',
+            'bidang' => $collection,
+            'urusans' => $urusans,
+            'current_urusan' => $current_urusan,
+            'id' => $id,
         ]);
     }
 
@@ -84,11 +106,20 @@ class BidangController extends Controller
             'id_urusan' => 'required',
         ]);
 
-        DB::table("main2_bidangs")->where('id', '=', $id)->update([
+        $created = Carbon::now();
+
+        $update = DB::table("main2_bidangs")->where('id', '=', $id)->update([
             "nama_bidang" => $request->nama_bidang,
             "kode_bidang" => $request->kode_bidang,
-            "id_urusan" => $request->id_urusan
+            "id_urusan" => $request->id_urusan,
+            "updated_at" => $created
         ]);
+
+        if ($update) {
+            return redirect()->route('bidang.index')->with('success', 'Data bidang berhasil disimpan');
+        } else {
+            return redirect()->route('bidang.index')->with('error', 'Data gagal disimpan');
+        }
     }
 
     /**
@@ -96,6 +127,11 @@ class BidangController extends Controller
      */
     public function destroy(string $id)
     {
-        DB::table("main2_bidangs")->where('id', '=', $id)->delete();
+        $delete = DB::table("main2_bidangs")->where('id', '=', $id)->delete();
+        if ($delete) {
+            return redirect()->route('bidang.index')->with('success_delete', 'Data berhasil dihapus');
+        } else {
+            return redirect()->route('bidang.index')->with('error', 'Data gagal dihapus');
+        }
     }
 }

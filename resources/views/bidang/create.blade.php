@@ -19,19 +19,19 @@
 
                         <div class="card-body">
                             <!-- action form yang mengarah ke route store untuk proses simpan data  -->
-                            <form action="#" method="post">
+                            <form action="{{ route('bidang.store') }}" method="post">
                                 @csrf
                                 <div class="mb-3 input-success">
-                                    <label for="" class="mb-1">Nama Bidang</label>
-                                    <input type="text" name="nama_urusan" class="form-control @error('nama_urusan') is-invalid @enderror">
-                                    @error('nama_urusan')
+                                    <label for="" class="mb-1">Nama Bidang<span class="text-danger">*</span></label>
+                                    <input type="text" name="nama_bidang" class="form-control @error('nama_bidang') is-invalid @enderror">
+                                    @error('nama_bidang')
                                     <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="mb-3 input-success">
-                                    <label for="" class="mb-1">Kode Bidang</label>
-                                    <input type="text" name="kode_urusan" class="form-control @error('kode_urusan') is-invalid @enderror">
-                                    @error('kode_urusan')
+                                    <label for="" class="mb-1">Kode Bidang<span class="text-danger">*</span></label>
+                                    <input type="text" name="kode_bidang" class="form-control @error('kode_bidang') is-invalid @enderror">
+                                    @error('kode_bidang')
                                     <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -39,15 +39,17 @@
                                     <label for="id_urusan" class="mb-1"> Urusan <span class="text-danger">*</span></label>
                                     <select name="id_urusan" class="id_urusan form-control @error('id_urusan') is-invalid @enderror" id="id_urusan">
                                         <option value="">Pilih Urusan</option>
-                                        <option value="1">1</option>
-                                        <option value="1">1</option>
-                                        <option value="1">1</option>
+                                        @forelse ($urusans as $item)
+                                        <option value="{{ $item->id }}">{{ $item->nama_urusan }}</option>
+                                        @empty
+                                        <option value="">Urusan tidak ditemukan</option>
+                                        @endforelse
                                     </select>
                                     @error('id_urusan')
                                     <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group mb-2 mt-2">
+                                <div class="form-group mb-2 mt-3">
                                     <button type="submit" class="btn btn-lg btn-primary">Simpan</button>
                                 </div>
                             </form>
@@ -66,8 +68,19 @@
 <script>
     $(document).ready(function() {
         $('.id_urusan').select2({
-            placeholder: 'Pilih Data Kategori'
+            placeholder: 'Pilih Data Urusan'
         });
     })
+</script>
+<script>
+    @if($message = Session::get('error'))
+    Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'error..',
+        html: '{{ $message }}',
+        timer: 4000
+    })
+    @endif
 </script>
 @endsection

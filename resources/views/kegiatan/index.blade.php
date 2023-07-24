@@ -28,7 +28,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="example3" class="display" style="min-width: 845px">
+                            <table id="dataKegiatan" class="table table-bordered table-responsive-sm">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
@@ -39,18 +39,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1.</td>
-                                        <td>Tiger Nixon</td>
-                                        <td>kegiatan</td>
-                                        <td>Program</td>
-                                        <td>
-                                            <div class="d-flex">
-                                                <a href="{{ route('kegiatan.edit','1') }}" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
-                                                <a href="#" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
-                                            </div>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -70,11 +58,68 @@
 
 @section('script')
 
-<!-- Apex Chart -->
-<script src="{{ asset('assets//vendor/apexchart/apexchart.js') }}"></script>
-
 <!-- Datatable -->
 <script src="{{ asset('assets//vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('assets/js/plugins-init/datatables.init.js') }}"></script>
+
+<script>
+        $(function() {
+            $('#dataKegiatan').DataTable({
+                processing: true,
+                serverSide: true,
+                responsive: true,
+                autoWidth: false,
+                paging:true,
+                ajax: '{{ route('data-kegiatan') }}',
+                language: {
+                    paginate: {
+                    next: '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                    previous: '<i class="fa fa-angle-double-left" aria-hidden="true"></i>' 
+                    }
+		        },
+                columns: [{
+                        data: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'nama_kegiatan',
+                        searchable:true
+                    },
+                    {
+                        data: 'kode_kegiatan',
+                        searchable:true
+                    },
+                    {
+                        data: 'nama_program',
+                        searchable:true
+                    },
+                    {
+                        data: 'action'
+                    }
+                ]
+            })
+        })
+</script>
+
+<script>
+    @if($message = Session::get('success'))
+    Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Selamat',
+        html: '{{ $message }}',
+        timer: 4000
+    })
+    @endif
+    @if($message = Session::get('success_delete'))
+    Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Selamat',
+        html: '{{ $message }}',
+        timer: 4000
+    })
+    @endif
+</script>
 
 @endsection

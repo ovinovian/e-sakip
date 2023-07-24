@@ -19,31 +19,33 @@
 
                         <div class="card-body">
                             <!-- action form yang mengarah ke route store untuk proses simpan data  -->
-                            <form action="#" method="post">
+                            <form action="{{ route('kegiatan.store') }}" method="post">
                                 @csrf
                                 <div class="mb-3 input-success">
-                                    <label for="" class="mb-1">Nama Kegiatan</label>
+                                    <label for="" class="mb-1">Nama Kegiatan<span class="text-danger">*</span></label>
                                     <input type="text" name="nama_kegiatan" class="form-control @error('nama_kegiatan') is-invalid @enderror">
                                     @error('nama_kegiatan')
                                     <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="mb-3 input-success">
-                                    <label for="" class="mb-1">Kode Kegiatan</label>
+                                    <label for="" class="mb-1">Kode Kegiatan<span class="text-danger">*</span></label>
                                     <input type="text" name="kode_kegiatan" class="form-control @error('kode_kegiatan') is-invalid @enderror">
                                     @error('kode_kegiatan')
                                     <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="mb-3 input-success">
-                                    <label for="id_urusan" class="mb-1">Program<span class="text-danger">*</span></label>
-                                    <select name="id_urusan" class="id_urusan form-control @error('id_urusan') is-invalid @enderror" id="id_urusan">
+                                    <label for="id_program" class="mb-1">Program<span class="text-danger">*</span></label>
+                                    <select name="id_program" class="id_program form-control @error('id_program') is-invalid @enderror" id="id_program">
                                         <option value="">Pilih Program</option>
-                                        <option value="1">1</option>
-                                        <option value="1">1</option>
-                                        <option value="1">1</option>
+                                        @forelse ($programs as $item)
+                                        <option value="{{ $item->id }}">{{ $item->nama_program }}</option>
+                                        @empty
+                                        <option value="">program tidak ditemukan</option>
+                                        @endforelse
                                     </select>
-                                    @error('id_urusan')
+                                    @error('id_program')
                                     <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -65,9 +67,20 @@
 <script src="{{ asset('assets/vendor/select2/js/select2.full.min.js') }}"></script>
 <script>
     $(document).ready(function() {
-        $('.id_urusan').select2({
-            placeholder: 'Pilih Data Kategori'
+        $('.id_program').select2({
+            placeholder: 'Pilih Data Program'
         });
     })
+</script>
+<script>
+    @if($message = Session::get('error'))
+    Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'error..',
+        html: '{{ $message }}',
+        timer: 4000
+    })
+    @endif
 </script>
 @endsection

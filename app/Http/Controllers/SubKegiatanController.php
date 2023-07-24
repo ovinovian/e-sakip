@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -22,12 +23,10 @@ class SubKegiatanController extends Controller
      */
     public function create()
     {
-        // $collection = DB::table("main5_subkegiatans")->get();
-        // $kegiatans = DB::table("main4_kegiatans")->get();
+        $kegiatans = DB::table("main4_kegiatans")->get();
         return view('subkegiatan.create', [
             'title' => 'Add Sub Kegiatan',
-            // 'subkegiatans' => $collection,
-            // 'kegiatans' => $kegiatans,
+            'kegiatans' => $kegiatans,
         ]);
     }
 
@@ -42,11 +41,21 @@ class SubKegiatanController extends Controller
             'id_kegiatan' => 'required',
         ]);
 
-        DB::table("main5_subkegiatans")->insert([
+        $created = Carbon::now();
+
+        $save = DB::table("main5_subkegiatans")->insert([
             "nama_subkegiatan" => $request->nama_subkegiatan,
             "kode_subkegiatan" => $request->kode_subkegiatan,
-            "id_kegiatan" => $request->id_kegiatan
+            "id_kegiatan" => $request->id_kegiatan,
+            "created_at" => $created,
+            "updated_at" => $created
         ]);
+
+        if ($save) {
+            return redirect()->route('subkegiatan.index')->with('success', 'Data sub kegiatan berhasil disimpan');
+        } else {
+            return redirect()->route('subkegiatan.index')->with('error', 'Data gagal disimpan');
+        }
     }
 
     /**
@@ -62,13 +71,20 @@ class SubKegiatanController extends Controller
      */
     public function edit(string $id)
     {
-        // $collection = DB::table("main5_subkegiatans")->where('id', '=', $id)->get();
-        // $kegiatans = DB::table("main4_kegiatans")->get();
+        $collection = DB::table("main5_subkegiatans")->where('id', '=', $id)->first();
+        
+        $kegiatans = DB::table("main4_kegiatans")->get();
+        $current_kegiatan= DB::table("main4_kegiatans")
+                ->where('id', '=', $collection->id_kegiatan)
+                ->select('main4_kegiatans.id', 'main4_kegiatans.nama_kegiatan')
+                ->first();
 
         return view('subkegiatan.edit', [
             'title' => 'Edit Sub Kegiatan',
-            // 'subkegiatans' => $collection,
-            // 'kegiatans' => $kegiatans,
+            'subkegiatan' => $collection,
+            'kegiatans' => $kegiatans,
+            'current_kegiatan' => $current_kegiatan,
+            'id' => $id,
         ]);
     }
 
@@ -80,14 +96,23 @@ class SubKegiatanController extends Controller
         $this->validate($request, [
             'nama_subkegiatan' => 'required',
             'kode_subkegiatan' => 'required',
-            'id_bidang' => 'required',
+            'id_kegiatan' => 'required',
         ]);
 
-        DB::table("main5_subkegiatans")->where('id', '=', $id)->insert([
+        $created = Carbon::now();
+
+        $update = DB::table("main5_subkegiatans")->where('id', '=', $id)->update([
             "nama_subkegiatan" => $request->nama_subkegiatan,
             "kode_subkegiatan" => $request->kode_subkegiatan,
-            "id_kegiatan" => $request->id_kegiatan
+            "id_kegiatan" => $request->id_kegiatan,
+            "updated_at" => $created
         ]);
+
+        if ($update) {
+            return redirect()->route('subkegiatan.index')->with('success', 'Data sub kegiatan berhasil disimpan');
+        } else {
+            return redirect()->route('subkegiatan.index')->with('error', 'Data gagal disimpan');
+        }
     }
 
     /**
@@ -95,6 +120,12 @@ class SubKegiatanController extends Controller
      */
     public function destroy(string $id)
     {
-        DB::table("main5_subkegiatans")->where('id', '=', $id)->delete();
+        $delete = DB::table("main5_subkegiatans")->where('id', '=', $id)->delete();
+
+        if ($delete) {
+            return redirect()->route('subkegiatan.index')->with('success_delete', 'Data berhasil dihapus');
+        } else {
+            return redirect()->route('subkegiatan.index')->with('error', 'Data gagal dihapus');
+        }
     }
 }
