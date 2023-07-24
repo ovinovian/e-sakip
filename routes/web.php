@@ -42,14 +42,26 @@ Route::get('/home2', function () {
 });
 
 Route::resource('rpjmds', Rpjmd1RpjmdController::class);
-Route::resource('rpjmd_visis', Rpjmd2VisiController::class);
 Route::get('rpjmd_i_visis/{id}', [Rpjmd2VisiController::class, 'visi'])->name('rpjmd_i_visis');
 Route::get('rpjmd_c_visis/{id}', [Rpjmd2VisiController::class, 'add'])->name('rpjmd_c_visis');
+Route::resource('rpjmd_visis', Rpjmd2VisiController::class);
+Route::get('rpjmd_i_misis/{id}', [Rpjmd3MisiController::class, 'misi'])->name('rpjmd_i_misis');
+Route::get('rpjmd_c_misis/{id}', [Rpjmd3MisiController::class, 'add'])->name('rpjmd_c_misis');
 Route::resource('rpjmd_misis', Rpjmd3MisiController::class);
+Route::get('rpjmd_i_tujuans/{id}', [Rpjmd4TujuanController::class, 'tujuan'])->name('rpjmd_i_tujuans');
+Route::get('rpjmd_c_tujuans/{id}', [Rpjmd4TujuanController::class, 'add'])->name('rpjmd_c_tujuans');
 Route::resource('rpjmd_tujuans', Rpjmd4TujuanController::class);
+Route::get('rpjmd_i_sasarans/{id}', [Rpjmd5SasaranController::class, 'sasaran'])->name('rpjmd_i_sasarans');
+Route::get('rpjmd_c_sasarans/{id}', [Rpjmd5SasaranController::class, 'add'])->name('rpjmd_c_sasarans');
 Route::resource('rpjmd_sasarans', Rpjmd5SasaranController::class);
+Route::get('rpjmd_i_strategis/{id}', [Rpjmd6StrategiController::class, 'strategi'])->name('rpjmd_i_strategis');
+Route::get('rpjmd_c_strategis/{id}', [Rpjmd6StrategiController::class, 'add'])->name('rpjmd_c_strategis');
 Route::resource('rpjmd_strategis', Rpjmd6StrategiController::class);
+Route::get('rpjmd_i_kebijakans/{id}', [Rpjmd7KebijakanController::class, 'kebijakan'])->name('rpjmd_i_kebijakans');
+Route::get('rpjmd_c_kebijakans/{id}', [Rpjmd7KebijakanController::class, 'add'])->name('rpjmd_c_kebijakans');
 Route::resource('rpjmd_kebijakans', Rpjmd7KebijakanController::class);
+Route::get('rpjmd_i_programs/{id}', [Rpjmd8ProgramController::class, 'program'])->name('rpjmd_i_programs');
+Route::get('rpjmd_c_programs/{id}', [Rpjmd8ProgramController::class, 'add'])->name('rpjmd_c_programs');
 Route::resource('rpjmd_programs', Rpjmd8ProgramController::class);
 Route::resource('rpjmd_kegiatans', Rpjmd9KegiatanController::class);
 

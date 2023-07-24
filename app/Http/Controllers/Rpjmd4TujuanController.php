@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Rpjmd1_rpjmd;
+use App\Models\Rpjmd3_misi;
+use App\Models\Rpjmd4_tujuan;
+
 use Illuminate\Http\Request;
 
 class Rpjmd4TujuanController extends Controller
@@ -40,11 +42,27 @@ class Rpjmd4TujuanController extends Controller
         //     'type' => $this->type,
         // ]);
 
-        $rpjmds = Rpjmd1_rpjmd::all();
+        // $rpjmds = Rpjmd2_rpjmd::all();
 
-        $i = 0;
+        // $i = 0;
         
-        return view('rpjmds.index',compact('rpjmds','i'));
+        // return view('rpjmds.index',compact('rpjmds','i'));
+    }
+
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function tujuan($id)
+    {
+        $rpjmd_misis = Rpjmd3_misi::where('id',$id)->first();
+        $i = 0;
+        $rpjmd_tujuans = Rpjmd4_tujuan::where('id_misi_rpjmd',$id)->get();
+
+        return view('rpjmd_tujuans.index', compact('rpjmd_misis','rpjmd_tujuans','i'));
     }
 
 
@@ -56,7 +74,7 @@ class Rpjmd4TujuanController extends Controller
 
     public function create()
     {
-        return view('rpjmds.create');
+        // return view('rpjmd_visis.create');
     }
 
     /**
@@ -65,19 +83,31 @@ class Rpjmd4TujuanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function add($id)
+    {
+        $rpjmd_misis = Rpjmd3_misi::where('id', $id)->first();
+
+        $i = 0;
+        
+        return view('rpjmd_tujuans.create',compact('rpjmd_misis'));
+    }
     
     public function store(Request $request)
     {
         $validasi = request()->validate([
-            'tahun_awal' => 'required',
-            'tahun_akhir' => 'required',
+            'nama_tujuan_rpjmd' => 'required',
+            'id_misi_rpjmd' => 'required',
         ]);
 
         // dd($request);
+        
+        Rpjmd4_tujuan::create($validasi);
+        
+        $id = $request->id_misi_rpjmd;
 
-        Rpjmd1_rpjmd::create($validasi);
-        return redirect()->route('rpjmds.index')
-                        ->with('success','Rpjmd berhasil ditambahkan.');
+        return redirect()->route('rpjmd_i_tujuans', ['id' => $id])
+                        ->with('success','Tujuan RPJMD berhasil ditambahkan.');
     }
 
     /**
@@ -87,9 +117,9 @@ class Rpjmd4TujuanController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    public function show(Rpjmd1_rpjmd $rpjmd)
+    public function show(Rpjmd4_tujuan $rpjmd_tujuan)
     {
-        return view('rpjmds.show',compact('rpjmd'));
+        // return view('rpjmds.show',compact('rpjmd'));
     }
 
 
@@ -100,9 +130,13 @@ class Rpjmd4TujuanController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    public function edit(Rpjmd1_rpjmd $rpjmd)
+    public function edit(Rpjmd4_tujuan $rpjmd_tujuan)
     {
-        return view('rpjmds.edit',compact('rpjmd'));
+        $rpjmd_tujuans = Rpjmd4_tujuan::where('id', $rpjmd_tujuan->id)->get();
+        
+        $rpjmd_misis = Rpjmd3_misi::where('id', $rpjmd_tujuans[0]['id_misi_rpjmd'])->first();
+        
+        return view('rpjmd_tujuans.edit',compact('rpjmd_tujuans','rpjmd_misis'));
     }
 
     /**
@@ -113,16 +147,16 @@ class Rpjmd4TujuanController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function update(Request $request, Rpjmd1_rpjmd $rpjmd)
+    public function update(Request $request, Rpjmd4_tujuan $rpjmd_tujuan)
     {
         $validasi = request()->validate([
-            'tahun_awal' => 'required',
-            'tahun_akhir' => 'required',
+            'nama_tujuan_rpjmd' => 'required',
         ]);
+        
+        $rpjmd_tujuan->update($validasi);
 
-        $rpjmd->update($validasi);
-        return redirect()->route('rpjmds.index')
-                        ->with('success','Rpjmd berhasil dirubah');
+        return redirect()->route('rpjmd_i_tujuans',['id'=> $rpjmd_tujuan->id_misi_rpjmd])
+                        ->with('success','Tujuan RPJMD berhasil diubah');
     }
 
     /**
@@ -132,19 +166,13 @@ class Rpjmd4TujuanController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function destroy(Rpjmd1_rpjmd $rpjmd)
+    public function destroy(Rpjmd4_tujuan $rpjmd_tujuan)
     {
-        $rpjmd->delete();
+        $rpjmd_misis = Rpjmd4_tujuan::where('id',$rpjmd_tujuan->id)->pluck('id_misi_rpjmd');
+        
+        $rpjmd_tujuan->delete();
 
-        return redirect()->route('rpjmds.index')
-                        ->with('success','Rpjmd berhasil dihapus');
-    }
-
-    public function publishrpjmd($id)
-    {
-        Rpjmd1_rpjmd::where('id', $id)->update(['publish' => 1]);
-    
-        return redirect()->route('rpjmds.index')
-                        ->with('success','rpjmd berhasil dipublish');
+        return redirect()->route('rpjmd_i_tujuans',['id'=> $rpjmd_misis[0]])
+                        ->with('success','Tujuan RPJMD berhasil dihapus');
     }
 }

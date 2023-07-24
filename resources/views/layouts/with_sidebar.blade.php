@@ -10,7 +10,7 @@
 	<meta name="description" content="Workload : Workload Project Management Admin  Bootstrap 5 Template" />
 	<meta property="og:title" content="Workload : Workload Project Management Admin  Bootstrap 5 Template" />
 	<meta property="og:description" content="Workload : Workload Project Management Admin  Bootstrap 5 Template" />
-	<meta property="og:image" content="https:/workload.dexignlab.com/xhtml/social-image.png" />
+	<!-- <meta property="og:image" content="https:/workload.dexignlab.com/xhtml/social-image.png" /> -->
 	<meta name="format-detection" content="telephone=no">
 	
 	<!-- PAGE TITLE HERE -->

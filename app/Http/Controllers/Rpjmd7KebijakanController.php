@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Rpjmd1_rpjmd;
+use App\Models\Rpjmd6_strategi;
+use App\Models\Rpjmd7_kebijakan;
+
 use Illuminate\Http\Request;
 
 class Rpjmd7KebijakanController extends Controller
@@ -40,11 +42,27 @@ class Rpjmd7KebijakanController extends Controller
         //     'type' => $this->type,
         // ]);
 
-        $rpjmds = Rpjmd1_rpjmd::all();
+        // $rpjmds = Rpjmd2_rpjmd::all();
 
-        $i = 0;
+        // $i = 0;
         
-        return view('rpjmds.index',compact('rpjmds','i'));
+        // return view('rpjmds.index',compact('rpjmds','i'));
+    }
+
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function kebijakan($id)
+    {
+        $rpjmd_strategis = Rpjmd6_strategi::where('id',$id)->first();
+        $i = 0;
+        $rpjmd_kebijakans = Rpjmd7_kebijakan::where('id_strategi_rpjmd',$id)->get();
+
+        return view('rpjmd_kebijakans.index', compact('rpjmd_strategis','rpjmd_kebijakans','i'));
     }
 
 
@@ -56,7 +74,7 @@ class Rpjmd7KebijakanController extends Controller
 
     public function create()
     {
-        return view('rpjmds.create');
+        // return view('rpjmd_visis.create');
     }
 
     /**
@@ -65,19 +83,31 @@ class Rpjmd7KebijakanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function add($id)
+    {
+        $rpjmd_strategis = Rpjmd6_strategi::where('id', $id)->first();
+
+        $i = 0;
+        
+        return view('rpjmd_kebijakans.create',compact('rpjmd_strategis'));
+    }
     
     public function store(Request $request)
     {
         $validasi = request()->validate([
-            'tahun_awal' => 'required',
-            'tahun_akhir' => 'required',
+            'nama_kebijakan_rpjmd' => 'required',
+            'id_strategi_rpjmd' => 'required',
         ]);
 
         // dd($request);
+        
+        Rpjmd7_kebijakan::create($validasi);
+        
+        $id = $request->id_strategi_rpjmd;
 
-        Rpjmd1_rpjmd::create($validasi);
-        return redirect()->route('rpjmds.index')
-                        ->with('success','Rpjmd berhasil ditambahkan.');
+        return redirect()->route('rpjmd_i_kebijakans', ['id' => $id])
+                        ->with('success','Kebijakan RPJMD berhasil ditambahkan.');
     }
 
     /**
@@ -87,9 +117,9 @@ class Rpjmd7KebijakanController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    public function show(Rpjmd1_rpjmd $rpjmd)
+    public function show(Rpjmd7_kebijakan $rpjmd_kebijakan)
     {
-        return view('rpjmds.show',compact('rpjmd'));
+        // return view('rpjmds.show',compact('rpjmd'));
     }
 
 
@@ -100,9 +130,13 @@ class Rpjmd7KebijakanController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    public function edit(Rpjmd1_rpjmd $rpjmd)
+    public function edit(Rpjmd7_kebijakan $rpjmd_kebijakan)
     {
-        return view('rpjmds.edit',compact('rpjmd'));
+        $rpjmd_kebijakans = Rpjmd7_kebijakan::where('id', $rpjmd_kebijakan->id)->get();
+        
+        $rpjmd_strategis = Rpjmd6_strategi::where('id', $rpjmd_kebijakans[0]['id_strategi_rpjmd'])->first();
+        
+        return view('rpjmd_kebijakans.edit',compact('rpjmd_kebijakans','rpjmd_strategis'));
     }
 
     /**
@@ -113,16 +147,16 @@ class Rpjmd7KebijakanController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function update(Request $request, Rpjmd1_rpjmd $rpjmd)
+    public function update(Request $request, Rpjmd7_kebijakan $rpjmd_kebijakan)
     {
         $validasi = request()->validate([
-            'tahun_awal' => 'required',
-            'tahun_akhir' => 'required',
+            'nama_kebijakan_rpjmd' => 'required',
         ]);
+        
+        $rpjmd_kebijakan->update($validasi);
 
-        $rpjmd->update($validasi);
-        return redirect()->route('rpjmds.index')
-                        ->with('success','Rpjmd berhasil dirubah');
+        return redirect()->route('rpjmd_i_kebijakans',['id'=> $rpjmd_kebijakan->id_strategi_rpjmd])
+                        ->with('success','Kebijakan RPJMD berhasil diubah');
     }
 
     /**
@@ -132,19 +166,13 @@ class Rpjmd7KebijakanController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function destroy(Rpjmd1_rpjmd $rpjmd)
+    public function destroy(Rpjmd7_kebijakan $rpjmd_kebijakan)
     {
-        $rpjmd->delete();
+        $rpjmd_strategis = Rpjmd7_kebijakan::where('id',$rpjmd_kebijakan->id)->pluck('id_strategi_rpjmd');
+        
+        $rpjmd_kebijakan->delete();
 
-        return redirect()->route('rpjmds.index')
-                        ->with('success','Rpjmd berhasil dihapus');
-    }
-
-    public function publishrpjmd($id)
-    {
-        Rpjmd1_rpjmd::where('id', $id)->update(['publish' => 1]);
-    
-        return redirect()->route('rpjmds.index')
-                        ->with('success','rpjmd berhasil dipublish');
+        return redirect()->route('rpjmd_i_kebijakans',['id'=> $rpjmd_strategis[0]])
+                        ->with('success','Kebijakan RPJMD berhasil dihapus');
     }
 }

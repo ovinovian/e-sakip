@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Rpjmd1_rpjmd;
+use App\Models\Rpjmd4_tujuan;
+use App\Models\Rpjmd5_sasaran;
+
 use Illuminate\Http\Request;
 
 class Rpjmd5SasaranController extends Controller
@@ -40,11 +42,27 @@ class Rpjmd5SasaranController extends Controller
         //     'type' => $this->type,
         // ]);
 
-        $rpjmds = Rpjmd1_rpjmd::all();
+        // $rpjmds = Rpjmd2_rpjmd::all();
 
-        $i = 0;
+        // $i = 0;
         
-        return view('rpjmds.index',compact('rpjmds','i'));
+        // return view('rpjmds.index',compact('rpjmds','i'));
+    }
+
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function sasaran($id)
+    {
+        $rpjmd_tujuans = Rpjmd4_tujuan::where('id',$id)->first();
+        $i = 0;
+        $rpjmd_sasarans = Rpjmd5_sasaran::where('id_tujuan_rpjmd',$id)->get();
+
+        return view('rpjmd_sasarans.index', compact('rpjmd_tujuans','rpjmd_sasarans','i'));
     }
 
 
@@ -56,7 +74,7 @@ class Rpjmd5SasaranController extends Controller
 
     public function create()
     {
-        return view('rpjmds.create');
+        // return view('rpjmd_visis.create');
     }
 
     /**
@@ -65,19 +83,31 @@ class Rpjmd5SasaranController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function add($id)
+    {
+        $rpjmd_tujuans = Rpjmd4_tujuan::where('id', $id)->first();
+
+        $i = 0;
+        
+        return view('rpjmd_sasarans.create',compact('rpjmd_tujuans'));
+    }
     
     public function store(Request $request)
     {
         $validasi = request()->validate([
-            'tahun_awal' => 'required',
-            'tahun_akhir' => 'required',
+            'nama_sasaran_rpjmd' => 'required',
+            'id_tujuan_rpjmd' => 'required',
         ]);
 
         // dd($request);
+        
+        Rpjmd5_sasaran::create($validasi);
+        
+        $id = $request->id_tujuan_rpjmd;
 
-        Rpjmd1_rpjmd::create($validasi);
-        return redirect()->route('rpjmds.index')
-                        ->with('success','Rpjmd berhasil ditambahkan.');
+        return redirect()->route('rpjmd_i_sasarans', ['id' => $id])
+                        ->with('success','Sasaran RPJMD berhasil ditambahkan.');
     }
 
     /**
@@ -87,9 +117,9 @@ class Rpjmd5SasaranController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    public function show(Rpjmd1_rpjmd $rpjmd)
+    public function show(Rpjmd5_sasaran $rpjmd_sasaran)
     {
-        return view('rpjmds.show',compact('rpjmd'));
+        // return view('rpjmds.show',compact('rpjmd'));
     }
 
 
@@ -100,9 +130,13 @@ class Rpjmd5SasaranController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    public function edit(Rpjmd1_rpjmd $rpjmd)
+    public function edit(Rpjmd5_sasaran $rpjmd_sasaran)
     {
-        return view('rpjmds.edit',compact('rpjmd'));
+        $rpjmd_sasarans = Rpjmd5_sasaran::where('id', $rpjmd_sasaran->id)->get();
+        
+        $rpjmd_tujuans = Rpjmd4_tujuan::where('id', $rpjmd_sasarans[0]['id_tujuan_rpjmd'])->first();
+        
+        return view('rpjmd_sasarans.edit',compact('rpjmd_sasarans','rpjmd_tujuans'));
     }
 
     /**
@@ -113,16 +147,16 @@ class Rpjmd5SasaranController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function update(Request $request, Rpjmd1_rpjmd $rpjmd)
+    public function update(Request $request, Rpjmd5_sasaran $rpjmd_sasaran)
     {
         $validasi = request()->validate([
-            'tahun_awal' => 'required',
-            'tahun_akhir' => 'required',
+            'nama_sasaran_rpjmd' => 'required',
         ]);
+        
+        $rpjmd_sasaran->update($validasi);
 
-        $rpjmd->update($validasi);
-        return redirect()->route('rpjmds.index')
-                        ->with('success','Rpjmd berhasil dirubah');
+        return redirect()->route('rpjmd_i_sasarans',['id'=> $rpjmd_sasaran->id_tujuan_rpjmd])
+                        ->with('success','Sasaran RPJMD berhasil diubah');
     }
 
     /**
@@ -132,19 +166,13 @@ class Rpjmd5SasaranController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function destroy(Rpjmd1_rpjmd $rpjmd)
+    public function destroy(Rpjmd5_sasaran $rpjmd_sasaran)
     {
-        $rpjmd->delete();
+        $rpjmd_tujuans = Rpjmd5_sasaran::where('id',$rpjmd_sasaran->id)->pluck('id_tujuan_rpjmd');
+        
+        $rpjmd_sasaran->delete();
 
-        return redirect()->route('rpjmds.index')
-                        ->with('success','Rpjmd berhasil dihapus');
-    }
-
-    public function publishrpjmd($id)
-    {
-        Rpjmd1_rpjmd::where('id', $id)->update(['publish' => 1]);
-    
-        return redirect()->route('rpjmds.index')
-                        ->with('success','rpjmd berhasil dipublish');
+        return redirect()->route('rpjmd_i_sasarans',['id'=> $rpjmd_tujuans[0]])
+                        ->with('success','Sasaran RPJMD berhasil dihapus');
     }
 }

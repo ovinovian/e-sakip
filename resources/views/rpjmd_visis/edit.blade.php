@@ -4,10 +4,14 @@
 		
         <div class="content-body">
             <div class="container-fluid">
-				<div class="row page-titles">
-					<ol class="breadcrumb">
-						<li class="breadcrumb-item active"><a href="javascript:void(0)">Visi RPJMD</a></li>
+            <div class="row page-titles">
+                    <ol class="breadcrumb">
+						<li class="breadcrumb-item active"><a href="javascript:void(0)">RPJMD</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">Visi</a></li>
 					</ol>
+                    <div class="breadcrumb">
+                            <a class="text-info divide-solid" href="#">RPJMD {{ $rpjmd->tahun_awal }} - {{ $rpjmd->tahun_akhir }}</a>
+                    </div>
                 </div>
 
                 <!-- row -->
@@ -27,11 +31,11 @@
                                         </div>
                                         <div class="row align-items-center mt-3">
                                             <div class="col-auto my-1">
-                                                <a href="{{ route('rpjmd_i_visis',['id' => $rpjmd_visis[0]['id']]) }}" class="btn btn-warning mx-3">Batal</a>
+                                                <a href="{{ route('rpjmd_i_visis',['id' => $rpjmd->id]) }}" class="btn btn-warning mx-3">Batal</a>
                                                 <button type="submit" class="btn btn-primary">Simpan</button>
                                             </div>
                                         </div>
-                                        <input type="hidden" name="id_rpjmd" value="{{ $rpjmd[0]['id'] }}">
+                                        <input type="hidden" name="id_rpjmd" value="{{ $rpjmd->id }}">
                                     </form>
                                 </div>
 							</div>
