@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Rpjmd1_rpjmd;
 use App\Models\Rpjmd2_visi;
+use App\Models\Rpjmd3_misi;
 use Illuminate\Http\Request;
 
 class Rpjmd2VisiController extends Controller
@@ -53,10 +54,12 @@ class Rpjmd2VisiController extends Controller
 
     public function visi($id)
     {
-        $rpjmds = Rpjmd1_rpjmd::where('id',$id)->get();
-        $i = 1;
+        $rpjmds = Rpjmd1_rpjmd::where('id',$id)->first();
+        
+        $i = 0;
+        
         $rpjmd_visis = Rpjmd2_visi::where('id_rpjmd',$id)->get();
-
+        
         return view('rpjmd_visis.index', compact('rpjmds','rpjmd_visis','i'));
     }
 
@@ -81,7 +84,7 @@ class Rpjmd2VisiController extends Controller
 
     public function add($id)
     {
-        $rpjmds = Rpjmd1_rpjmd::where('id', $id)->get();
+        $rpjmds = Rpjmd1_rpjmd::where('id', $id)->first();
 
         $i = 0;
         
@@ -133,7 +136,7 @@ class Rpjmd2VisiController extends Controller
     {
         $rpjmd_visis = Rpjmd2_visi::where('id', $rpjmd_visi->id)->get();
         
-        $rpjmd = Rpjmd1_rpjmd::where('id', $rpjmd_visis[0]['id_rpjmd'])->get();
+        $rpjmd = Rpjmd1_rpjmd::where('id', $rpjmd_visis[0]['id_rpjmd'])->first();
         
         return view('rpjmd_visis.edit',compact('rpjmd_visis','rpjmd'));
     }
@@ -152,11 +155,11 @@ class Rpjmd2VisiController extends Controller
             'nama_visi_rpjmd' => 'required',
         ]);
         
-        $rpjmd = Rpjmd1_rpjmd::where('id',$rpjmd_visi->id);
+        // $rpjmd = Rpjmd1_rpjmd::where('id',$rpjmd_visi->id_rpjmd);
 
         $rpjmd_visi->update($validasi);
 
-        return redirect()->route('rpjmd_i_visis',['id'=> $rpjmd])
+        return redirect()->route('rpjmd_i_visis',['id'=> $rpjmd_visi->id_rpjmd])
                         ->with('success','Visi RPJMD berhasil dirubah');
     }
 
@@ -169,11 +172,11 @@ class Rpjmd2VisiController extends Controller
 
     public function destroy(Rpjmd2_visi $rpjmd_visi)
     {
-        $rpjmd = Rpjmd1_rpjmd::where('id',$rpjmd_visi->id);
-
+        $rpjmd = Rpjmd2_visi::where('id',$rpjmd_visi->id)->pluck('id_rpjmd');
+        
         $rpjmd_visi->delete();
 
-        return redirect()->route('rpjmd_i_visis',['id'=> $rpjmd])
+        return redirect()->route('rpjmd_i_visis',['id'=> $rpjmd[0]])
                         ->with('success','Visi RPJMD berhasil dihapus');
     }
 }

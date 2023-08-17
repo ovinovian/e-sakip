@@ -11,11 +11,14 @@
 		
 <div class="content-body">
             <div class="container-fluid">
-				
-				<div class="row page-titles">
-					<ol class="breadcrumb">
+                <div class="row page-titles">
+                    <ol class="breadcrumb">
 						<li class="breadcrumb-item active"><a href="javascript:void(0)">RPJMD</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">Kebijakan</a></li>
 					</ol>
+                    <div class="breadcrumb">
+                            <a class="text-info divide-solid" href="{{route('rpjmd_i_strategis', $rpjmd_strategis->id_sasaran_rpjmd)}}">Strategi : {{ $rpjmd_strategis->nama_strategi_rpjmd }}</a>
+                    </div>
                 </div>
                 <!-- row -->
 
@@ -24,35 +27,33 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <a class="btn light btn-primary" href="{{ route('rpjmds.create') }}">Tambah RPJMD</a>
+                                <a class="btn light btn-primary" href="{{route('rpjmd_c_kebijakans', ['id' => $rpjmd_strategis->id])}}">Tambah Kebijakan RPJMD</a>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table id="example3" class="display" style="min-width: 845px">
                                         <thead>
                                             <tr>
-                                                <th>RPJMD</th>
-                                                <th>Tahun Mulai</th>
-                                                <th>Tahun Selesai</th>
+                                                <th>No</th>
+                                                <th>Kebijakan</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($rpjmds as $key => $rpjmd)
+                                            @foreach ($rpjmd_kebijakans as $key => $rpjmd_kebijakan)
                                             <tr>
-                                                <td>RPJMD {{ $rpjmd->tahun_awal }} - {{ $rpjmd->tahun_akhir }}</td>
-                                                <td>{{ $rpjmd->tahun_awal }}</td>
-                                                <td>{{ $rpjmd->tahun_akhir }}</td>
-                                                <td>{{ $rpjmd->status_rpjmd }}</td>
-                                                @if($rpjmd->status_rpjmd == 0)
+                                                <td><a href="#">{{ ++$i }}</a></td>
+                                                <td><a href="#">{{ $rpjmd_kebijakan->nama_kebijakan_rpjmd }}</a></td>
+                                                <td>{{ $rpjmd_kebijakan->status_kebijakan_rpjmd }}</td>
+                                                @if($rpjmd_kebijakan->status_kebijakan_rpjmd == 0)
                                                 <td>
 													<div class="d-flex">
-														<a href="{{ route('rpjmds.edit',$rpjmd->id) }}" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
-                                                        <form action="{{ route('rpjmds.destroy',$rpjmd->id) }}" method="POST">
+														<a href="{{ route('rpjmd_kebijakans.edit',$rpjmd_kebijakan->id) }}" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                                        <form action="{{ route('rpjmd_kebijakans.destroy',$rpjmd_kebijakan->id) }}" method="POST">
                                                             @csrf
                                                             @method('DELETE')
-														<button type="submit" class="btn btn-danger shadow btn-xs sharp" onclick="return confirm('Apakah yakin ingin menghapus rpjmd?');"><i class="fa fa-trash"></i></a>
+														<button type="submit" class="btn btn-danger shadow btn-xs sharp" onclick="return confirm('Apakah yakin ingin menghapus Kebijakan RPJMD?');"><i class="fa fa-trash"></i></a>
                                                         </form>
 													</div>												
 												</td>

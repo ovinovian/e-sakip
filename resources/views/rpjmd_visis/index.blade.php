@@ -9,13 +9,16 @@
 
 @section('content')
 		
-<div class="content-body">
+        <div class="content-body">
             <div class="container-fluid">
-				
-				<div class="row page-titles">
-					<ol class="breadcrumb">
-						<li class="breadcrumb-item active"><a href="javascript:void(0)">Visi RPJMD {{ $rpjmds[0]['tahun_awal']}} - {{ $rpjmds[0]['tahun_akhir']}}</a></li>
+                <div class="row page-titles">
+                    <ol class="breadcrumb">
+						<li class="breadcrumb-item active"><a href="javascript:void(0)">RPJMD</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">Visi</a></li>
 					</ol>
+                    <div class="breadcrumb">
+                            <a class="text-info divide-solid" href="{{route('rpjmds.index')}}">RPJMD {{ $rpjmds->tahun_awal }} - {{ $rpjmds->tahun_akhir }}</a>
+                    </div>
                 </div>
                 <!-- row -->
 
@@ -24,7 +27,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <a class="btn light btn-primary" href="{{route('rpjmd_c_visis', ['id' => $rpjmds[0]['id']])}}">Tambah Visi RPJMD</a>
+                                <a class="btn light btn-primary" href="{{route('rpjmd_c_visis', $rpjmds->id)}}">Tambah Visi RPJMD</a>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -33,14 +36,16 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>Visi RPJMD</th>
+                                                <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($rpjmd_visis as $key => $rpjmd_visi)
                                             <tr>
-                                                <td>{{ $i++ }}</td>
-                                                <td><a href="{{ route('rpjmd_visis.index',$rpjmds[0]['id']) }}">{{ $rpjmd_visi->nama_visi_rpjmd }}</a></td>
+                                                <td><a href="{{ route('rpjmd_i_misis',$rpjmd_visi->id) }}">{{ ++$i }}</a></td>
+                                                <td><a href="{{ route('rpjmd_i_misis',$rpjmd_visi->id) }}">{{ $rpjmd_visi->nama_visi_rpjmd }}</a></td>
+                                                <td>{{ $rpjmd_visi->status_visi_rpjmd }}</td>
                                                 @if($rpjmd_visi->status_visi_rpjmd == 0)
                                                 <td>
 													<div class="d-flex">
