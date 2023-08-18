@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DataTableController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KegiatanController;
+use App\Http\Controllers\OpdController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Rpjmd1RpjmdController;
@@ -103,6 +104,8 @@ Route::get('data-bidang', [DataTableController::class, 'bidangs'])->name('data-b
 Route::get('data-program', [DataTableController::class, 'programs'])->name('data-program');
 Route::get('data-kegiatan', [DataTableController::class, 'kegiatans'])->name('data-kegiatan');
 Route::get('data-subkegiatan', [DataTableController::class, 'subkegiatans'])->name('data-subkegiatan');
+//sengaja dipisah controller
+Route::get('data-opd', [OpdController::class, 'getDataOpd'])->name('data-opd');
 
 //route urusan
 Route::resource('urusan', (UrusanController::class));
@@ -110,3 +113,4 @@ Route::resource('bidang', (BidangController::class));
 Route::resource('program', (ProgramController::class));
 Route::resource('kegiatan', (KegiatanController::class));
 Route::resource('subkegiatan', (SubKegiatanController::class));
+Route::resource('opd', (OpdController::class));
