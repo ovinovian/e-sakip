@@ -77,9 +77,13 @@ class Rpjmd1RpjmdController extends Controller
 
         // dd($request);
 
-        Rpjmd1_rpjmd::create($validasi);
-        return redirect()->route('rpjmds.index')
-                        ->with('success','Rpjmd berhasil ditambahkan.');
+        $save = Rpjmd1_rpjmd::create($validasi);
+        
+        if ($save) {
+            return redirect()->route('rpjmds.index')->with('success', 'RPJMD berhasil disimpan');
+        } else {
+            return redirect()->route('rpjmds.index')->with('error', 'RPJMD gagal disimpan');
+        }
     }
 
     /**
@@ -122,9 +126,13 @@ class Rpjmd1RpjmdController extends Controller
             'tahun_akhir' => 'required',
         ]);
 
-        $rpjmd->update($validasi);
-        return redirect()->route('rpjmds.index')
-                        ->with('success','Rpjmd berhasil dirubah');
+        $edit = $rpjmd->update($validasi);
+
+        if ($edit) {
+            return redirect()->route('rpjmds.index')->with('success', 'RPJMD berhasil diubah');
+        } else {
+            return redirect()->route('rpjmds.index')->with('error', 'RPJMD gagal diubah');
+        }
     }
 
     /**

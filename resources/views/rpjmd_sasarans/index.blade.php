@@ -27,45 +27,50 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <a class="btn light btn-primary" href="{{route('rpjmd_c_sasarans', ['id' => $rpjmd_tujuans->id])}}">Tambah Sasaran RPJMD</a>
+                                <a class="btn btn-rounded btn-primary" href="{{route('rpjmd_c_sasarans', ['id' => $rpjmd_tujuans->id])}}"><span class="btn-icon-start text-info"><i class="fa fa-plus color-info"></i></span>Tambah Sasaran RPJMD</a>
                             </div>
                             <div class="card-body">
-                                <div class="table-responsive">
-                                    <table id="example3" class="display" style="min-width: 845px">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Sasaran</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($rpjmd_sasarans as $key => $rpjmd_sasaran)
-                                            <tr>
-                                                <td><a href="{{ route('rpjmd_i_strategis',$rpjmd_sasaran->id) }}">{{ ++$i }}</a></td>
-                                                <td><a href="{{ route('rpjmd_i_strategis',$rpjmd_sasaran->id) }}">{{ $rpjmd_sasaran->nama_sasaran_rpjmd }}</a></td>
-                                                <td>{{ $rpjmd_sasaran->status_sasaran_rpjmd }}</td>
-                                                @if($rpjmd_sasaran->status_sasaran_rpjmd == 0)
-                                                <td>
-													<div class="d-flex">
-														<a href="{{ route('rpjmd_sasarans.edit',$rpjmd_sasaran->id) }}" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
-                                                        <form action="{{ route('rpjmd_sasarans.destroy',$rpjmd_sasaran->id) }}" method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-														<button type="submit" class="btn btn-danger shadow btn-xs sharp" onclick="return confirm('Apakah yakin ingin menghapus rpjmd?');"><i class="fa fa-trash"></i></a>
-                                                        </form>
-													</div>												
-												</td>
-                                                @else
-                                                <td></td>
-                                                @endif
-                                                <td></td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <div class="accordion accordion-danger-solid" id="accordion-two">
+                                @foreach ($rpjmd_sasarans as $key => $rpjmd_sasaran)
+								    <div class="accordion-item">
+                                        <div class="accordion-header rounded-lg" id="accord-2{{ ++$i }}" data-bs-toggle="collapse" data-bs-target="#collapse2{{ $i }}" aria-controls="collapse2{{ $i }}" aria-expanded="true" role="button">
+                                            <span class="accordion-header-text">{{ $rpjmd_sasaran->nama_sasaran_rpjmd }}</span>
+                                            <span class="accordion-header-indicator"></span>
+                                        </div>
+                                        <div id="collapse2{{ $i }}" class="collapse accordion__body show" aria-labelledby="accord-2{{ $i }}" data-bs-parent="#accordion-two">
+                                            <div class="accordion-body-text">
+                                                <div class="row mb-2">
+                                                    <div class="col-3">
+                                                        <a href="{{ route('rpjmd_i_strategis',$rpjmd_sasaran->id) }}" class="badge badge-rounded badge-secondary"><i class="fa fa-plus color-info"></i> Input Strategi</a>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-2">
+                                                    <div class="col-2">Status</div>
+                                                    <div class="col-3">{{ $rpjmd_sasaran->status_sasaran_rpjmd }}</div>
+                                                </div>
+                                                <div class="row mb-2">
+                                                    <div class="col-2">Aksi</div>
+                                                    <div class="col-3">
+                                                        <div class="dropdown">
+                                                            <button type="button" class="btn btn-success light sharp" data-bs-toggle="dropdown">
+                                                                <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+                                                            </button>
+                                                            <div class="dropdown-menu">
+                                                                <a class="dropdown-item" href="{{ route('rpjmd_sasarans.edit',$rpjmd_sasaran->id) }}">Edit</a>
+                                                                <form action="{{ route('rpjmd_sasarans.destroy',$rpjmd_sasaran->id) }}" method="POST">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit" class="dropdown-item" onclick="return confirm('Apakah yakin ingin menghapus Sasaran RPJMD?');">Delete</a>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+								    </div>
+                                    @endforeach							    
+								</div>
                             </div>
                         </div>
                     </div>

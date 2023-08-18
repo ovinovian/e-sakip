@@ -22,21 +22,20 @@
                                 <h4 class="card-title">Form Input Strategi</h4>
                             </div>
                             <div class="card-body">
-                                <div class="basic-form">
-                                    <form action="{{ route('rpjmd_strategis.store') }}" method="POST">
-                                        @csrf
-                                        <div class="input-group">
-                                            <textarea class="form-control" rows="10" id="comment" name="nama_strategi_rpjmd" placeholder="Isi Strategi RPJMD..." required></textarea>
+                                <form action="{{ route('rpjmd_strategis.store') }}" method="POST">
+                                    @csrf
+                                    <div class="mb-3 input-success">
+                                        <label for="" class="mb-1">Strategi<span class="text-danger">*</span></label>
+                                        <textarea class="form-control" rows="10" id="comment" name="nama_strategi_rpjmd" placeholder="Isi Strategi RPJMD..." required></textarea>
+                                    </div>
+                                    <div class="row align-items-center mt-3">
+                                        <div class="col-auto my-1">
+                                            <a href="{{ route('rpjmd_i_strategis', $rpjmd_sasarans->id) }}" class="btn btn-warning mx-3">Batal</a>
+                                            <button type="submit" class="btn btn-primary">Simpan</button>
                                         </div>
-                                        <div class="row align-items-center mt-3">
-                                            <div class="col-auto my-1">
-                                                <a href="{{ route('rpjmd_i_strategis', $rpjmd_sasarans->id) }}" class="btn btn-warning mx-3">Batal</a>
-                                                <button type="submit" class="btn btn-primary">Simpan</button>
-                                            </div>
-                                        </div>
-                                        <input type="hidden" name="id_sasaran_rpjmd" value="{{ $rpjmd_sasarans->id }}">
-                                    </form>
-                                </div>
+                                    </div>
+                                    <input type="hidden" name="id_sasaran_rpjmd" value="{{ $rpjmd_sasarans->id }}">
+                                </form>
 							</div>
                         </div>
                     </div>

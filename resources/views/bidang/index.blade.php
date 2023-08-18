@@ -31,10 +31,10 @@
                             <table id="dataBidang" class="table table-bordered table-responsive-sm">
                                 <thead>
                                     <tr>
-                                        <th>No.</th>
-                                        <th>Nama Bidang</th>
-                                        <th>Kode Bidang</th>
+                                        <!-- <th>No.</th> -->
                                         <th>Urusan</th>
+                                        <th>Kode Bidang</th>
+                                        <th>Nama Bidang</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -76,13 +76,14 @@
                     previous: '<i class="fa fa-angle-double-left" aria-hidden="true"></i>' 
                     }
 		        },
-                columns: [{
-                        data: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false
-                    },
+                columns: [
+                    // {
+                    //     data: 'DT_RowIndex',
+                    //     orderable: false,
+                    //     searchable: false
+                    // },
                     {
-                        data: 'nama_bidang',
+                        data: 'nama_urusan',
                         searchable:true
                     },
                     {
@@ -90,7 +91,7 @@
                         searchable:true
                     },
                     {
-                        data: 'nama_urusan',
+                        data: 'nama_bidang',
                         searchable:true
                     },
                     {

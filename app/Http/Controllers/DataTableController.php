@@ -29,6 +29,11 @@ class DataTableController extends Controller
                         ->orderBy('main2_bidangs.updated_at', 'desc')->get();
 
         return datatables()->of($collection)
+            // ->addColumn('full_restaurant_name', function ($data)) {
+
+            // })->addColumn('full_restaurant_name', function ($data)) {
+
+            // })
             ->addColumn('action', function($row) {
                 return view('bidang.action', ['id' => $row->id]);
             })

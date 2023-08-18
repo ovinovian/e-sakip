@@ -31,7 +31,7 @@ class Rpjmd2VisiController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    public function index($id)
+    public function index()
     {
         // if ($request->ajax()) {
         //     return datatables(DataDb::query())
@@ -43,13 +43,13 @@ class Rpjmd2VisiController extends Controller
         // ]);
         // dd($id);
 
-        // $rpjmds = Rpjmd1_rpjmd::all();
-        // $rpjmd_visis = Rpjmd2_visi::where('id_rpjmd',$request)->get();
-
-
-        // $i = 0;
+        $rpjmd_visis = Rpjmd2_visi::all();
         
-        // return view('rpjmd_visis.index',compact('rpjmds','rpjmd_visis','i'));
+        $i = 0;
+        
+        // $rpjmd_visis = Rpjmd2_visi::where('id_rpjmd',$id)->get();
+        
+        return view('rpjmd_visis.index_all', compact('rpjmd_visis','i'));
     }
 
     public function visi($id)

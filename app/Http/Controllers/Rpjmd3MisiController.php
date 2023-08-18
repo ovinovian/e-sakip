@@ -30,7 +30,7 @@ class Rpjmd3MisiController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    public function index(Request $request)
+    public function index()
     {
         // if ($request->ajax()) {
         //     return datatables(DataDb::query())
@@ -41,11 +41,10 @@ class Rpjmd3MisiController extends Controller
         //     'type' => $this->type,
         // ]);
 
-        // $rpjmds = Rpjmd2_rpjmd::all();
+        $rpjmd_misis = Rpjmd3_misi::all();
+        $i = 0;
 
-        // $i = 0;
-        
-        // return view('rpjmds.index',compact('rpjmds','i'));
+        return view('rpjmd_misis.index_all', compact('rpjmd_misis','i'));
     }
 
 

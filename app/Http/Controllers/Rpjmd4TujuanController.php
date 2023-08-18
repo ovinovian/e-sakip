@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Rpjmd3_misi;
 use App\Models\Rpjmd4_tujuan;
+use App\Models\Rpjmd4_tujuan_indikator;
+use App\Models\Satuan;
 
 use Illuminate\Http\Request;
 
@@ -92,6 +94,16 @@ class Rpjmd4TujuanController extends Controller
         
         return view('rpjmd_tujuans.create',compact('rpjmd_misis'));
     }
+
+    public function add_indikator($id)
+    {
+        $rpjmd_tujuans = Rpjmd4_tujuan::where('id', $id)->first();
+        $satuans = Satuan::all();
+        
+        $i = 0;
+        
+        return view('rpjmd_tujuans.createindikator',compact('rpjmd_tujuans','satuans'));
+    }
     
     public function store(Request $request)
     {
@@ -108,6 +120,22 @@ class Rpjmd4TujuanController extends Controller
 
         return redirect()->route('rpjmd_i_tujuans', ['id' => $id])
                         ->with('success','Tujuan RPJMD berhasil ditambahkan.');
+    }
+
+    public function store_indikator(Request $request)
+    {
+        $validasi = request()->validate([
+            'nama_tujuan_indikator_rpjmd' => 'required',
+            'id_tujuan_rpjmd' => 'required',
+            'id_satuan' => 'required',
+        ]);
+
+        $id = (Rpjmd4_tujuan::where('id',$request->id_tujuan_rpjmd)->first('id'))->id;
+        
+        Rpjmd4_tujuan_indikator::create($validasi);
+
+        return redirect()->route('rpjmd_i_tujuans', ['id' => $request->id_misi_rpjmd])
+                        ->with('success','Indikator Tujuan RPJMD berhasil ditambahkan.');
     }
 
     /**
