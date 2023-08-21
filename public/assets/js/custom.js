@@ -17,7 +17,7 @@
 			$('#main-wrapper').addClass('show');
 		},800);	
 		
-	}
+	// }
 
     var handleMetisMenu = function() {
 		if(jQuery('#menu').length > 0 ){

@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DataTableController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KegiatanController;
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\OpdController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\Renstra1TujuanController;
@@ -50,6 +51,12 @@ Route::get('/', function () {
 Route::get('/home2', function () {
     return view('home2');
 });
+
+Route::get('/landing_page', function () {
+    return view('landing_page');
+});
+
+Route::get('landing-page', [LandingPageController::class,'landingPage'])->name('landing-page');
 
 Route::get('login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login')->middleware('guest');
