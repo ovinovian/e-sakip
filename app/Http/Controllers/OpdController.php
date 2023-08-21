@@ -21,20 +21,20 @@ class OpdController extends Controller
     public function getDataOpd()
     {
         $collection = DB::table("opds as A")
-                        ->select('A.*', 'B.nama_urusan', 'C.nama_bidang')
-                        ->join('main1_urusans as B', 'A.id_urusan', '=', 'B.id')
-                        ->join('main2_bidangs as C', 'A.id_bidang', '=', 'C.id')
-                        ->orderBy('A.updated_at', 'desc')
-                        ->get();
+            ->select('A.*', 'B.nama_urusan', 'C.nama_bidang')
+            ->join('main1_urusans as B', 'A.id_urusan', '=', 'B.id')
+            ->join('main2_bidangs as C', 'A.id_bidang', '=', 'C.id')
+            ->orderBy('A.updated_at', 'desc')
+            ->get();
 
         return datatables()->of($collection)
-            ->addColumn('opd', function($row) {
-                return "<div class='opd-container'><div class='opd-line'><span class='opd-label'>Nama OPD  &nbsp;: &nbsp;</span><span class='opd-content'>".$row->nama_opd."</span></div><div class='opd-line'><span class='opd-label'>Kode OPD  &nbsp; &nbsp;: &nbsp;</span><span class='opd-content'>".$row->kode_opd."</span></div></div>";
+            ->addColumn('opd', function ($row) {
+                return "<p>" . $row->kode_opd . " - " . $row->nama_opd . "</p>";
             })
-            ->addColumn('sub_opd', function($row) {
-                return "<div class='opd-container'><div class='opd-line'><span class='opd-label'>Nama OPD  &nbsp;: &nbsp;</span><span class='opd-content'>".$row->nama_sub_opd."</span></div><div class='opd-line'><span class='opd-label'>Kode OPD  &nbsp; &nbsp;: &nbsp;</span><span class='opd-content'>".$row->kode_sub_opd."</span></div></div>";
-            })            
-            ->addColumn('action', function($row) {
+            ->addColumn('sub_opd', function ($row) {
+                return "<p>" . $row->kode_sub_opd . " - " . $row->nama_sub_opd . "</p>";
+            })
+            ->addColumn('action', function ($row) {
                 return view('opd.action', ['id' => $row->id]);
             })
             ->addIndexColumn()
@@ -75,7 +75,7 @@ class OpdController extends Controller
 
         ]);
 
-        if($dataJmlLama == 0){
+        if ($dataJmlLama == 0) {
             $created = Carbon::now();
 
             $save = DB::table("opds")->insert([
@@ -95,11 +95,10 @@ class OpdController extends Controller
             } else {
                 return redirect()->route('opd.index')->with('error', 'Data gagal disimpan');
             }
-        }
-        else{
+        } else {
             foreach ($dataLama as $item) {
                 // dd($item->nama_opd);
-                if ($item->nama_opd == $request->nama_opd ) {
+                if ($item->nama_opd == $request->nama_opd) {
                     return back()->with('error', 'Nama OPD Sudah Digunakan');
                 } elseif ($item->kode_opd == $request->kode_opd) {
                     return back()->with('error', 'Kode OPD Sudah Digunakan');
@@ -130,8 +129,6 @@ class OpdController extends Controller
                 }
             }
         }
-
-        
     }
 
     /**
@@ -152,14 +149,14 @@ class OpdController extends Controller
         $bidangs = DB::table("main2_bidangs")->get();
 
         $current_urusan = DB::table("main1_urusans")
-                ->where('id', '=', $collection->id_urusan)
-                ->select('main1_urusans.id', 'main1_urusans.nama_urusan')
-                ->first();
+            ->where('id', '=', $collection->id_urusan)
+            ->select('main1_urusans.id', 'main1_urusans.nama_urusan')
+            ->first();
 
         $current_bidang = DB::table("main2_bidangs")
-                ->where('id', '=', $collection->id_bidang)
-                ->select('main2_bidangs.id', 'main2_bidangs.nama_bidang')
-                ->first();
+            ->where('id', '=', $collection->id_bidang)
+            ->select('main2_bidangs.id', 'main2_bidangs.nama_bidang')
+            ->first();
 
         return view('opd.edit', [
             'title' => 'Add Kegiatan',
@@ -177,51 +174,37 @@ class OpdController extends Controller
      */
     public function update(Request $request, string $id)
     {
-            $dataLama = DB::table("opds")->get();
-            
-            $this->validate($request, [
-                'nama_opd' => 'required',
-                'kode_opd' => 'required',
-                'nama_sub_opd' => 'required',
-                'kode_sub_opd' => 'required',
-                'status_opd' => 'required',
-                'id_urusan' => 'required',
-                'id_bidang' => 'required',
-            ]);
+        $dataLama = DB::table("opds")->get();
 
-            // dd($dataLama);
-            foreach ($dataLama as $item) {
-                // dd($item->nama_opd);
-                if ($item->nama_opd == $request->nama_opd ) {
-                    return back()->with('error', 'Nama OPD Sudah Digunakan');
-                } elseif ($item->kode_opd == $request->kode_opd) {
-                    return back()->with('error', 'Kode OPD Sudah Digunakan');
-                } elseif ($item->nama_sub_opd == $request->nama_sub_opd) {
-                    return back()->with('error', 'Nama Sub OPD Sudah Digunakan');
-                } elseif ($item->kode_sub_opd == $request->kode_sub_opd) {
-                    return back()->with('error', 'Kode Sub OPD Sudah Digunakan');
-                } else {
-                    $created = Carbon::now();
+        $this->validate($request, [
+            'nama_opd' => 'required',
+            'kode_opd' => 'required',
+            'nama_sub_opd' => 'required',
+            'kode_sub_opd' => 'required',
+            'status_opd' => 'required',
+            'id_urusan' => 'required',
+            'id_bidang' => 'required',
+        ]);
 
-                    $update = DB::table("opds")->where('id', '=', $id)->update([
-                        "nama_opd" => $request->nama_opd,
-                        "kode_opd" => $request->kode_opd,
-                        "nama_sub_opd" => $request->nama_sub_opd,
-                        "kode_sub_opd" => $request->kode_sub_opd,
-                        "status_opd" => $request->status_opd,
-                        "id_urusan" => $request->id_urusan,
-                        "id_bidang" => $request->id_bidang,
-                        "updated_at" => $created
-                    ]);
+        $created = Carbon::now();
 
-                    if ($update) {
-                        return redirect()->route('opd.index')->with('success', 'Data OPD berhasil disimpan');
-                    } else {
-                        return redirect()->route('opd.index')->with('error', 'Data gagal disimpan');
-                    }
-                }
-            }
-        
+        $update = DB::table("opds")->where('id', '=', $id)->update([
+            "nama_opd" => $request->nama_opd,
+            "kode_opd" => $request->kode_opd,
+            "nama_sub_opd" => $request->nama_sub_opd,
+            "kode_sub_opd" => $request->kode_sub_opd,
+            "status_opd" => $request->status_opd,
+            "id_urusan" => $request->id_urusan,
+            "id_bidang" => $request->id_bidang,
+            "updated_at" => $created
+        ]);
+
+        if ($update) {
+            return redirect()->route('opd.index')->with('success', 'Data OPD berhasil disimpan');
+        } else {
+            return redirect()->route('opd.index')->with('error', 'Data gagal disimpan');
+        }
+
     }
 
     /**

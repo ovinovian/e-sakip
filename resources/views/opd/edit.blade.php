@@ -67,7 +67,7 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 input-success">
-                                    <label for="" class="mb-1">Kode OPD<span class="text-danger">*</span></label>
+                                    <label for="" class="mb-1">Kode Sub OPD<span class="text-danger">*</span></label>
                                     <input type="text" name="kode_sub_opd" value="{{$opds->kode_sub_opd}}" class="form-control @error('kode_sub_opd') is-invalid @enderror">
                                     @error('kode_sub_opd')
                                     <span class="invalid-feedback">{{ $message }}</span>

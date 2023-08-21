@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Rpjmd5_sasaran;
 use App\Models\Rpjmd6_strategi;
+use App\Models\Vw_rpjmd6_strategi;
 
 use Illuminate\Http\Request;
 
@@ -60,7 +61,7 @@ class Rpjmd6StrategiController extends Controller
     {
         $rpjmd_sasarans = Rpjmd5_sasaran::where('id',$id)->first();
         $i = 0;
-        $rpjmd_strategis = Rpjmd6_strategi::where('id_sasaran_rpjmd',$id)->get();
+        $rpjmd_strategis = Vw_rpjmd6_strategi::where('id_sasaran_rpjmd',$id)->get();
 
         return view('rpjmd_strategis.index', compact('rpjmd_sasarans','rpjmd_strategis','i'));
     }
