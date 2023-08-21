@@ -1,14 +1,10 @@
 <?php
 
-<<<<<<< HEAD
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BidangController;
-=======
->>>>>>> 96e3963b03bccaf20296add729ff96f53d64644c
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\BidangController;
 use App\Http\Controllers\DataTableController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KegiatanController;
