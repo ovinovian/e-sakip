@@ -15,7 +15,10 @@
     <meta name="format-detection" content="telephone=no">
 
     <!-- PAGE TITLE HERE -->
-    <title>Workload Project Management</title>
+    <title>e-SAKIP</title>
+    <link href="{{ asset('assets/images/logo.png') }}" rel="icon">
+    <link href="{{ asset('assets/images/logo.png') }}" rel="apple-touch-icon">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/images/logo.png') }}">
 
     <!-- FAVICONS ICON -->
     <link rel="shortcut icon" type="image/png" href="images/favicon.png" />
