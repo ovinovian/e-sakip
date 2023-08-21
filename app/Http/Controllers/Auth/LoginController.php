@@ -84,7 +84,8 @@ class LoginController extends Controller
             $data = User::where('email',$request->email)->first();
             $request->session()->put('id_opd', $data->id_opd);
 
-            return redirect()->intended('home');
+            // return redirect()->intended('home');
+            return redirect()->route('main-index');
         };
 
         return back()->withErrors([
@@ -93,7 +94,7 @@ class LoginController extends Controller
     }
 
     public function logout() {
-        // auth()->logout();
+        auth()->logout();
         request()->session()->invalidate();
         request()->session()->regenerateToken();
         if(session()->has('id_opd')){

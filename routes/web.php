@@ -100,6 +100,9 @@ Route::resource('rpjmd_kegiatans', Rpjmd9KegiatanController::class);
 
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/main', [HomeController::class, 'main'])->name('main-index');
+Route::get('/main_detail', [HomeController::class, 'mainDetail'])->name('main-detail');
+
 
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('roles', RoleController::class);
