@@ -41,13 +41,14 @@ class Renstra1TujuanController extends Controller
 
     public function tujuan($id)
     {
-        $rpjmds = Rpjmd1_rpjmd::where('id',$id)->first();
+        $rpjmds = Rpjmd1_rpjmd::where('id',session('id_rpjmd'))->first();
         
         $i = 0;
         
-        $rpjmd_visis = Rpjmd2_visi::where('id_rpjmd',$id)->get();
+        $rpjmd_visis = Rpjmd2_visi::where('id_rpjmd',session('id_rpjmd'))->get();
+        $renstra_tujuans = Renstra1_tujuan::where('id_opd');
         
-        return view('rpjmd_visis.index', compact('rpjmds','rpjmd_visis','i'));
+        return view('renstra_tujuans.index', compact('rpjmds','rpjmd_visis','i'));
     }
 
 
