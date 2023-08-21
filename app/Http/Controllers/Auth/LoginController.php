@@ -86,9 +86,9 @@ class LoginController extends Controller
             $request->session()->regenerate();
             $data = User::where('email',$request->email)->first();
             $request->session()->put('id_opd', $data->id_opd);
-            // dd($request->session()->all());
 
-            return redirect()->intended('home');
+            // return redirect()->intended('home');
+            return redirect()->route('main-index');
         };
 
         return back()->withErrors([

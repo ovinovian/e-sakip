@@ -122,7 +122,7 @@
         icon: 'warning',
         title: 'perhatian..!',
         html: '{{ $message }}',
-        timer: 4000
+        timer: 9000
     })
     @endif
 </script>

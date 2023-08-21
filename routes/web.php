@@ -1,10 +1,11 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+
+use App\Http\Controllers\BidangController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\BidangController;
 use App\Http\Controllers\DataTableController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KegiatanController;
@@ -99,6 +100,9 @@ Route::resource('rpjmd_kegiatans', Rpjmd9KegiatanController::class);
 
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/main', [HomeController::class, 'main'])->name('main-index');
+Route::get('/main_detail', [HomeController::class, 'mainDetail'])->name('main-detail');
+
 
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('roles', RoleController::class);
