@@ -61,6 +61,7 @@ class OpdController extends Controller
      */
     public function store(Request $request)
     {
+        $dataJmlLama = DB::table("opds")->count();
         $dataLama = DB::table("opds")->get();
 
         $this->validate($request, [
@@ -74,35 +75,58 @@ class OpdController extends Controller
 
         ]);
 
-        foreach ($dataLama as $item) {
-            // dd($item->nama_opd);
-            if ($item->nama_opd == $request->nama_opd ) {
-                return back()->with('error', 'Nama OPD Sudah Digunakan');
-            } elseif ($item->kode_opd == $request->kode_opd) {
-                return back()->with('error', 'Kode OPD Sudah Digunakan');
-            } elseif ($item->nama_sub_opd == $request->nama_sub_opd) {
-                return back()->with('error', 'Nama Sub OPD Sudah Digunakan');
-            } elseif ($item->kode_sub_opd == $request->kode_sub_opd) {
-                return back()->with('error', 'Kode Sub OPD Sudah Digunakan');
+        if($dataJmlLama == 0){
+            $created = Carbon::now();
+
+            $save = DB::table("opds")->insert([
+                "nama_opd" => $request->nama_opd,
+                "kode_opd" => $request->kode_opd,
+                "nama_sub_opd" => $request->nama_sub_opd,
+                "kode_sub_opd" => $request->kode_sub_opd,
+                "status_opd" => $request->status_opd,
+                "id_urusan" => $request->id_urusan,
+                "id_bidang" => $request->id_bidang,
+                "created_at" => $created,
+                "updated_at" => $created
+            ]);
+
+            if ($save) {
+                return redirect()->route('opd.index')->with('success', 'Data OPD berhasil disimpan');
             } else {
-                $created = Carbon::now();
-
-                $save = DB::table("opds")->insert([
-                    "nama_opd" => $request->nama_opd,
-                    "kode_opd" => $request->kode_opd,
-                    "nama_sub_opd" => $request->nama_sub_opd,
-                    "kode_sub_opd" => $request->kode_sub_opd,
-                    "status_opd" => $request->status_opd,
-                    "id_urusan" => $request->id_urusan,
-                    "id_bidang" => $request->id_bidang,
-                    "created_at" => $created,
-                    "updated_at" => $created
-                ]);
-
-                if ($save) {
-                    return redirect()->route('opd.index')->with('success', 'Data OPD berhasil disimpan');
+                return redirect()->route('opd.index')->with('error', 'Data gagal disimpan');
+            }
+        }
+        else{
+            foreach ($dataLama as $item) {
+                // dd($item->nama_opd);
+                if ($item->nama_opd == $request->nama_opd ) {
+                    return back()->with('error', 'Nama OPD Sudah Digunakan');
+                } elseif ($item->kode_opd == $request->kode_opd) {
+                    return back()->with('error', 'Kode OPD Sudah Digunakan');
+                } elseif ($item->nama_sub_opd == $request->nama_sub_opd) {
+                    return back()->with('error', 'Nama Sub OPD Sudah Digunakan');
+                } elseif ($item->kode_sub_opd == $request->kode_sub_opd) {
+                    return back()->with('error', 'Kode Sub OPD Sudah Digunakan');
                 } else {
-                    return redirect()->route('opd.index')->with('error', 'Data gagal disimpan');
+                    $created = Carbon::now();
+
+                    $save = DB::table("opds")->insert([
+                        "nama_opd" => $request->nama_opd,
+                        "kode_opd" => $request->kode_opd,
+                        "nama_sub_opd" => $request->nama_sub_opd,
+                        "kode_sub_opd" => $request->kode_sub_opd,
+                        "status_opd" => $request->status_opd,
+                        "id_urusan" => $request->id_urusan,
+                        "id_bidang" => $request->id_bidang,
+                        "created_at" => $created,
+                        "updated_at" => $created
+                    ]);
+
+                    if ($save) {
+                        return redirect()->route('opd.index')->with('success', 'Data OPD berhasil disimpan');
+                    } else {
+                        return redirect()->route('opd.index')->with('error', 'Data gagal disimpan');
+                    }
                 }
             }
         }
