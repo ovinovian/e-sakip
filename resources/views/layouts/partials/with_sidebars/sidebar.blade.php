@@ -27,6 +27,7 @@
 					<li><a href="{{ route('kegiatan.index') }}">Kegiatan</a></li>
 					<li><a href="{{ route('subkegiatan.index') }}">Sub Kegiatan</a></li>
 					<li><a href="{{ route('opd.index') }}">OPD</a></li>
+					<li><a href="{{ route('admin.index') }}">Admin OPD</a></li>
 				</ul>
 			</li>
 			<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
