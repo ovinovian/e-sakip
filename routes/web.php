@@ -11,6 +11,11 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\OpdController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\Renstra1TujuanController;
+use App\Http\Controllers\Renstra2SasaranController;
+use App\Http\Controllers\Renstra3ProgramController;
+use App\Http\Controllers\Renstra4KegiatanController;
+use App\Http\Controllers\Renstra5SubkegiatanController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Rpjmd1RpjmdController;
 use App\Http\Controllers\Rpjmd2VisiController;
@@ -21,6 +26,7 @@ use App\Http\Controllers\Rpjmd6StrategiController;
 use App\Http\Controllers\Rpjmd7KebijakanController;
 use App\Http\Controllers\Rpjmd8ProgramController;
 use App\Http\Controllers\Rpjmd9KegiatanController;
+
 use App\Http\Controllers\SubKegiatanController;
 use App\Http\Controllers\UrusanController;
 use App\Http\Controllers\UserController;
@@ -53,7 +59,10 @@ Route::get('login', [LoginController::class, 'index'])->name('login')->middlewar
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login')->middleware('guest');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
 
-Route::view('/home', 'home')->name('home')->middleware('auth');
+// Route::view('/home', 'home')->name('home')->middleware('auth');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/main', [HomeController::class, 'main'])->name('main-index');
+Route::get('/main_detail/{id_rpjmd}', [HomeController::class, 'mainDetail'])->name('main-detail');
 
 Route::resource('rpjmds', Rpjmd1RpjmdController::class);
 
@@ -99,13 +108,31 @@ Route::resource('rpjmd_programs', Rpjmd8ProgramController::class);
 
 Route::resource('rpjmd_kegiatans', Rpjmd9KegiatanController::class);
 
+Route::get('renstra_i_tujuans/{id}', [Renstra1TujuanController::class, 'tujuan'])->name('rpjmd_i_tujuans');
+Route::get('rpjmd_c_tujuans/{id}', [Renstra1TujuanController::class, 'add'])->name('rpjmd_c_tujuans');
+Route::resource('rpjmd_tujuans', Renstra1TujuanController::class);
+
+Route::get('renstra_i_sasarans/{id}', [Renstra2SasaranController::class, 'sasaran'])->name('rpjmd_i_sasarans');
+Route::get('rpjmd_c_sasarans/{id}', [Renstra2SasaranController::class, 'add'])->name('rpjmd_c_sasarans');
+Route::resource('rpjmd_sasarans', Renstra2SasaranController::class);
+
+Route::get('renstra_i_programs/{id}', [Renstra3ProgramController::class, 'program'])->name('rpjmd_i_programs');
+Route::get('rpjmd_c_programs/{id}', [Renstra3ProgramController::class, 'add'])->name('rpjmd_c_programs');
+Route::resource('rpjmd_programs', Renstra3ProgramController::class);
+
+Route::get('renstra_i_kegiatans/{id}', [Renstra4KegiatanController::class, 'kegiatan'])->name('rpjmd_i_kegiatans');
+Route::get('rpjmd_c_kegiatans/{id}', [Renstra4KegiatanController::class, 'add'])->name('rpjmd_c_kegiatans');
+Route::resource('rpjmd_kegiatans', Renstra4KegiatanController::class);
+
+Route::get('renstra_i_subkegiatans/{id}', [Renstra5SubKegiatanController::class, 'subkegiatan'])->name('rpjmd_i_subkegiatans');
+Route::get('rpjmd_c_subkegiatans/{id}', [Renstra5SubKegiatanController::class, 'add'])->name('rpjmd_c_subkegiatans');
+Route::resource('rpjmd_subkegiatans', Renstra5SubKegiatanController::class);
+
 // Auth::routes();
 
 
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/main', [HomeController::class, 'main'])->name('main-index');
-Route::get('/main_detail', [HomeController::class, 'mainDetail'])->name('main-detail');
+
 
 
 Route::group(['middleware' => ['auth']], function () {

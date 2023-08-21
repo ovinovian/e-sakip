@@ -41,21 +41,17 @@
                                         <div class="mb-3">
                                             <label class="mb-1"><strong>Email</strong></label>
                                             <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="name@example.com" value="{{ old('email') }}">
+                                            @error('email')
+                                            <span class="invalid-feedback">{{ $message }}</span>
+                                            @enderror
                                         </div>
-                                        @error('email')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
                                         <div class="mb-3">
                                             <label class="mb-1"><strong>Password</strong></label>
                                             <input type="password" name="password" class="form-control  @error('password') is-invalid @enderror" placeholder="password">
+                                            @error('password')
+                                            <span class="invalid-feedback">{{ $message }}</span>
+                                            @enderror
                                         </div>
-                                        @error('password')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
                                         <div class="text-center">
                                             <button type="submit" class="btn btn-primary btn-block">Sign In</button>
                                         </div>
