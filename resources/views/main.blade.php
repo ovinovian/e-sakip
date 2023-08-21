@@ -40,20 +40,22 @@
     <div class="authincation h-100">
         <div class="container h-100">
             <div class="row justify-content-center h-100 align-items-center">
-                <div class="col-md-10">
+                <div class="col-md-9">
                     <div class="row justify-content-center align-items-center">
+                        @foreach ($rpjmds as $key => $rpjmd)
                         <div class="col-md-3">
-                            <a href="{{ route('main-detail') }}">
+                            <a href="{{ route('main-detail',$rpjmd->id) }}">
                                 <div class="card">
                                     <div class="card-body">
-                                        <p class="card-text text-center" style="font-weight: bold;">RPJMD1
+                                        <p class="card-text text-center" style="font-weight: bold;">RPJMD
                                         </p>
-                                        <p class="card-text text-center" style="font-weight: bold;">2022 - 2023
+                                        <p class="card-text text-center" style="font-weight: bold;">{{ $rpjmd->tahun_awal }} - {{ $rpjmd->tahun_akhir }}
                                         </p>
                                     </div>
                                 </div>
                             </a>
                         </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
