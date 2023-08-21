@@ -730,6 +730,48 @@
         chart.render();
     
 	}
+
+	var emailchart2 = function(){
+		var options = {
+		 series: [27, 11, 22,15,25],
+		 chart: {
+		 type: 'donut',
+		 height:250
+	   },
+	   dataLabels:{
+		   enabled: false
+	   },
+	   stroke: {
+		 width: 0,
+	   },
+	   colors:['#8621C3', 'var(--primary)', '#FAF119','#FF5151','#6499FF'],
+	   legend: {
+			 position: 'bottom',
+			 show:false
+		   },
+	   responsive: [{
+		 breakpoint: 1800,
+		 options: {
+		  chart: {
+			 height:200
+		   },
+		 }
+	   },
+	   {
+		 breakpoint: 1800,
+		 options: {
+		  chart: {
+			 height:200
+		   },
+		 }
+	   }
+	   ]
+	   };
+
+	   var chart = new ApexCharts(document.querySelector("#emailchart2"), options);
+	   chart.render();
+   
+   }
  
 	/* Function ============ */
 		return {
@@ -746,6 +788,7 @@
 			NewCustomers();
 			NewCustomers1();
 			emailchart();
+			emailchart2();
 				
 			},
 			

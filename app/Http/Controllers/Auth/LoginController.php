@@ -108,7 +108,7 @@ class LoginController extends Controller
             request()->session()->pull('id_role');
         }
         
-        return redirect('/');
+        return redirect()->route('landing-page');
     }
 }
 

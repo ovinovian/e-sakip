@@ -15,12 +15,17 @@
     <meta name="format-detection" content="telephone=no">
 
     <!-- PAGE TITLE HERE -->
-    <title>Workload Project Management</title>
+    <title>e-SAKIP</title>
+    <link href="{{ asset('assets/images/logo.png') }}" rel="icon">
+    <link href="{{ asset('assets/images/logo.png') }}" rel="apple-touch-icon">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/images/logo.png') }}">
 
     <!-- FAVICONS ICON -->
     <link rel="shortcut icon" type="image/png" href="images/favicon.png" />
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
     <style>
+
+        
         .card {
             background-color: #f0f0f0;
             border: 1px solid #ccc;
@@ -37,6 +42,12 @@
 </head>
 
 <body class="vh-100">
+    <div id="preloader">
+        <div class="lds-ripple">
+            <div></div>
+            <div></div>
+        </div>
+    </div>
     <div class="authincation h-100">
         <div class="container h-100">
             <div class="row justify-content-center h-100 align-items-center">
