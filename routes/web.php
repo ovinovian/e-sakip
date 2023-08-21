@@ -45,13 +45,7 @@ Route::get('/home2', function () {
 
 Route::get('login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login')->middleware('guest');
-Route::post('/logout', function () {
-    auth()->logout();
-    request()->session()->invalidate();
-    request()->session()->regenerateToken();
-
-    return redirect('/');
-})->name('logout')->middleware('auth');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
 
 Route::view('/home', 'home')->name('home')->middleware('auth');
 

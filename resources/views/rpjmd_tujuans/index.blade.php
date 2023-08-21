@@ -73,7 +73,7 @@
                                                 </div>
                                                 @else
                                                     @php
-                                                    $indnya = \App\Models\Rpjmd4_tujuan_indikator::join('satuans','satuans.id','=',rpjmd4_tujuan_indikators.id_satuan)->where('id_tujuan_rpjmd',$rpjmd_tujuan->id)->get();
+                                                    $indnya = \App\Models\Vw_rpjmd4_tujuan_indikator::where('id_tujuan_rpjmd',$rpjmd_tujuan->id)->get();
                                                     
                                                     @endphp
                                                 <div class="row mb-2">

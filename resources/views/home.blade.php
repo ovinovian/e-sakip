@@ -18,6 +18,7 @@
 								<div class="row">
 									<div class="col-xl-6 col-sm-6 col-xxl-12">
 										<div class="card" id="user-activity">
+											<!-- {{ Session::get('id_opd') }} -->
 											<div class="card-header border-0 pb-0 flex-wrap">
 												<div>
 													<span class="mb-3 d-block fs-16">Current Balance</span>

@@ -81,7 +81,9 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            dd($request->session()->all());
+            $data = User::where('email',$request->email)->first();
+            $request->session()->put('id_opd', $data->id_opd);
+            // dd($request->session()->all());
 
             return redirect()->intended('home');
         };
@@ -89,6 +91,17 @@ class LoginController extends Controller
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ])->onlyInput('email');
+    }
+
+    public function logout() {
+        // auth()->logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+        if(session()->has('id_opd')){
+            request()->session()->pull('id_opd');
+        }
+        
+        return redirect('/');
     }
 }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Rpjmd6_strategi;
 use App\Models\Rpjmd7_kebijakan;
+use App\Models\Vw_rpjmd7_kebijakan;
 
 use Illuminate\Http\Request;
 
@@ -60,7 +61,7 @@ class Rpjmd7KebijakanController extends Controller
     {
         $rpjmd_strategis = Rpjmd6_strategi::where('id',$id)->first();
         $i = 0;
-        $rpjmd_kebijakans = Rpjmd7_kebijakan::where('id_strategi_rpjmd',$id)->get();
+        $rpjmd_kebijakans = Vw_rpjmd7_kebijakan::where('id_strategi_rpjmd',$id)->get();
 
         return view('rpjmd_kebijakans.index', compact('rpjmd_strategis','rpjmd_kebijakans','i'));
     }

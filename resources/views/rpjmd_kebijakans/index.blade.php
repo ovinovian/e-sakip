@@ -27,10 +27,10 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <a class="btn btn-rounded btn-primary" href="{{route('rpjmd_c_kebijakans', ['id' => $rpjmd_strategis->id])}}"><span class="btn-icon-start text-info"><i class="fa fa-plus color-info"></i></span>Tambah Kebijakan RPJMD</a>
+                                <a class="btn btn-rounded btn-warning" href="{{route('rpjmd_c_kebijakans', ['id' => $rpjmd_strategis->id])}}"><span class="btn-icon-start text-warning"><i class="fa fa-plus color-info"></i></span>Tambah Kebijakan RPJMD</a>
                             </div>
                             <div class="card-body">
-                                <div class="accordion accordion-danger-solid" id="accordion-two">
+                                <div class="accordion accordion-header-shadow accordion-rounded" id="accordion-two">
                                 @foreach ($rpjmd_kebijakans as $key => $rpjmd_kebijakan)
 								    <div class="accordion-item">
                                         <div class="accordion-header rounded-lg" id="accord-2{{ ++$i }}" data-bs-toggle="collapse" data-bs-target="#collapse2{{ $i }}" aria-controls="collapse2{{ $i }}" aria-expanded="true" role="button">
@@ -51,8 +51,8 @@
                                                                 <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
                                                             </button>
                                                             <div class="dropdown-menu">
-                                                                <a class="dropdown-item" href="{{ route('rpjmd_kebijakans.edit',$rpjmd_kebijakan->id) }}">Edit</a>
-                                                                <form action="{{ route('rpjmd_kebijakans.destroy',$rpjmd_kebijakan->id) }}" method="POST">
+                                                                <a class="dropdown-item" href="{{ route('rpjmd_kebijakans.edit',$rpjmd_kebijakan->id_kebijakan_rpjmd) }}">Edit</a>
+                                                                <form action="{{ route('rpjmd_kebijakans.destroy',$rpjmd_kebijakan->id_kebijakan_rpjmd) }}" method="POST">
                                                                     @csrf
                                                                     @method('DELETE')
                                                                     <button type="submit" class="dropdown-item" onclick="return confirm('Apakah yakin ingin menghapus kebijakan RPJMD?');">Delete</a>
