@@ -55,10 +55,5 @@
 				</ul>
 			</li>
 		</ul>
-
-		<div class="copyright">
-			<p><strong>Workload Project Management</strong> © 2021 All Rights Reserved</p>
-			<p class="fs-12">Made with <span class="heart"></span> by DexignLab</p>
-		</div>
 	</div>
 </div>
