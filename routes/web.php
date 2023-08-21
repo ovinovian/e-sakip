@@ -45,6 +45,10 @@ Route::get('/home2', function () {
     return view('home2');
 });
 
+Route::get('/landing_page', function () {
+    return view('landing_page');
+});
+
 Route::get('login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login')->middleware('guest');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
