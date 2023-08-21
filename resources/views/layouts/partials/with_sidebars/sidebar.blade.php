@@ -36,14 +36,6 @@
 				</a>
 				<ul aria-expanded="false">
 					<li><a href="{{ route('rpjmds.index') }}">RPJMD</a></li>
-					<li><a href="{{ route('rpjmd_visis.index') }}">Visi RPJMD</a></li>
-					<li><a href="{{ route('rpjmd_misis.index') }}">Misi RPJMD</a></li>
-					<li><a href="{{ route('rpjmd_tujuans.index') }}">Tujuan RPJMD</a></li>
-					<li><a href="{{ route('rpjmd_sasarans.index') }}">Sasaran RPJMD</a></li>
-					<li><a href="{{ route('rpjmd_strategis.index') }}">Strategi RPJMD</a></li>
-					<li><a href="{{ route('rpjmd_kebijakans.index') }}">Kebijakan RPJMD</a></li>
-					<li><a href="{{ route('rpjmd_programs.index') }}">Program RPJMD</a></li>
-					<li><a href="{{ route('rpjmd_kegiatans.index') }}">Kegiatan RPJMD</a></li>
 				</ul>
 			</li>
 			<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">

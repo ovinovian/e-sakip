@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Rpjmd1_rpjmd;
 use App\Models\User;
 
 use Illuminate\Http\Request;
@@ -69,14 +70,16 @@ class LoginController extends Controller
      */
     public function index()
     {
-        return view('auth.login');
+        $rpjmds = Rpjmd1_rpjmd::all()->sortDesc();
+
+        return view('auth.login',compact('rpjmds'));
     }
 
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
             'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
+            'password' => ['required', 'string']
         ]);
 
         if (Auth::attempt($credentials)) {
@@ -94,7 +97,7 @@ class LoginController extends Controller
     }
 
     public function logout() {
-        // auth()->logout();
+        auth()->logout();
         request()->session()->invalidate();
         request()->session()->regenerateToken();
         if(session()->has('id_opd')){
