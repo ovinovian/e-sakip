@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\BidangController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BidangController;
 use App\Http\Controllers\DataTableController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KegiatanController;
@@ -41,6 +42,18 @@ Route::get('/', function () {
 Route::get('/home2', function () {
     return view('home2');
 });
+
+Route::get('login', [LoginController::class, 'index'])->name('login')->middleware('guest');
+Route::post('/login', [LoginController::class, 'authenticate'])->name('login')->middleware('guest');
+Route::post('/logout', function () {
+    auth()->logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+
+    return redirect('/');
+})->name('logout')->middleware('auth');
+
+Route::view('/home', 'home')->name('home')->middleware('auth');
 
 Route::resource('rpjmds', Rpjmd1RpjmdController::class);
 
