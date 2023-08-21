@@ -1,5 +1,10 @@
 <?php
 
+<<<<<<< HEAD
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BidangController;
+=======
+>>>>>>> 96e3963b03bccaf20296add729ff96f53d64644c
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\LoginController;
@@ -113,8 +118,10 @@ Route::get('data-kegiatan', [DataTableController::class, 'kegiatans'])->name('da
 Route::get('data-subkegiatan', [DataTableController::class, 'subkegiatans'])->name('data-subkegiatan');
 //sengaja dipisah controller
 Route::get('data-opd', [OpdController::class, 'getDataOpd'])->name('data-opd');
+Route::get('data-admin', [AdminController::class, 'getDataAdmin'])->name('data-admin');
 
 //route urusan
+Route::resource('admin', (AdminController::class));
 Route::resource('urusan', (UrusanController::class));
 Route::resource('bidang', (BidangController::class));
 Route::resource('program', (ProgramController::class));
